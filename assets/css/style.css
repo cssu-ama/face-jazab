@@ -1,0 +1,41 @@
+:root {
+    --dark-gray: #2d2d2d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Vazirmatn;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.custom-triangle {
+    width: 12px;
+    height: 8px;
+    display: inline-block;
+    color: #fff;
+}
+
+#navMobileBtn {
+    border: none;
+    transform: rotate(90deg);
+    outline: none;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+button:focus,
+button:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 992px) {
+    #navDropdown {
+        width: 100% !important;
+    }
+}
