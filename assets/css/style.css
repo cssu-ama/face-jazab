@@ -9,6 +9,10 @@
     font-family: Vazirmatn;
 }
 
+header {
+    height: 75px !important;
+}
+
 .dropdown-toggle::after {
     display: none !important;
 }
