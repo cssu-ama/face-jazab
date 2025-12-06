@@ -12,7 +12,7 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg fixed-up bg-dark h-100">
+    <nav class="navbar navbar-expand-lg fixed-up h-100">
       <div class="container d-flex flex-row justify-content-between h-100">
 
         <button id="navMobileBtn" class="navbar-toggler order-3 order-lg-2 text-white" type="button"
@@ -68,19 +68,109 @@
     </nav>
   </header>
 
-  <main>
+  <main class="py-5">
     <div class="container d-flex flex-column justify-content-between align-items-center text-center">
       <h2 class="text-center text-white">
         <span>برای </span>
-        <span>آنالیز شدن </span>
-        <span>کافیه عکساتو آپلود کنی ..!</span>
+        <span class="text-warning">آنالیز شدن </span>
+        <span>
+          کافیه عکساتو
+          <br />
+          آپلود کنی ..!
+        </span>
       </h2>
+
+      <p class="text-white mb-5">چهره‌ات رو بررسی می‌کنم و نقاط قوت و ضعف رو دقیق بهت نشون می‌دم.</p>
+
+      <div class="d-flex flex-row gap-3 justify-content-between align-items-center">
+        <div class="card" style="width: 25rem;">
+          <div class="card-body d-flex flex-column align-items-center">
+            <p class="card-title text-white d-flex justify-content-center align-items-center text-center">زاویه نیم رخ</p>
+            <div class="d-flex flex-row gap-3 justify-content-center align-items-center">
+              <div class="d-flex flex-column justify-content-between align-items-center">
+                <img src="./assets/images/correct-icon.png" class="icon">                
+                <img src="./assets/images/profile-correct.png" class="face">
+              </div>
+
+              <div class="d-flex flex-column justify-content-between align-items-center">
+                <img src="./assets/images/wrong-icon.png" class="icon">                
+                <img src="./assets/images/profile-wrong.png" class="face">
+              </div>
+            </div>
+            <p class="text-white fw-bold mt-2">
+              <span>عکس از </span>
+              <span class="text-success">زاویه روبه‌رو</span>
+            </p>
+            <p class="sub text-white">(سمت چپ یا راست، فرقی ندارد)</p>
+
+            <div class="uploadBox upload-box text-info">برای آپلود عکس اینجا ضربه بزن..</div>
+            <input class="fileInput" type="file" style="display:none;">
+            <div class="fileName" style="color: #0dcaf0; font-size: 12px;"></div>
+
+          </div>
+         </div>
+
+        <div class="card" style="width: 25rem;">
+          <div class="card-body d-flex flex-column align-items-center">
+            <p class="card-title text-white d-flex justify-content-center align-items-center text-center">زاویه نیم رخ</p>
+            <div class="d-flex flex-row gap-3 justify-content-center align-items-center">
+              <div class="d-flex flex-column justify-content-between align-items-center">
+                <img src="./assets/images/correct-icon.png" class="icon">                
+                <img src="./assets/images/profile-correct.png" class="face">
+              </div>
+
+              <div class="d-flex flex-column justify-content-between align-items-center">
+                <img src="./assets/images/wrong-icon.png" class="icon">                
+                <img src="./assets/images/profile-wrong.png" class="face">
+              </div>
+            </div>
+            <p class="text-white fw-bold mt-2">
+              <span>عکس از </span>
+              <span class="text-success">زاویه روبه‌رو</span>
+            </p>
+            <p class="sub text-white">(سمت چپ یا راست، فرقی ندارد)</p>
+
+            <div class="upload-box text-info uploadBox">
+              <img src="" />
+              برای آپلود عکس اینجا ضربه بزن..            
+            </div>
+            <input class="fileInput" type="file" style="display:none;">
+            <div class="fileName" style="color: #0dcaf0; font-size: 12px;"></div>
+
+          </div>
+         </div>
+      </div>
     </div>
   </main>
 
 
 
   <script src="./assets/bootstrap-5.3.8/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const uploadBoxes = document.querySelectorAll('.uploadBox');
+    const fileInputs = document.querySelectorAll('.fileInput');
+    const fileNames = document.querySelectorAll('.fileName');
+
+    uploadBoxes[0].addEventListener('click', function () {
+      fileInputs[0].click();
+    });
+
+    uploadBoxes[1].addEventListener('click', function () {
+      fileInputs[1].click();
+    });
+
+    fileInputs[0].addEventListener('change', function () {
+      if (this.files.length > 0) {
+        fileNames[0].textContent = this.files[0].name;
+      }
+    });
+
+    fileInputs[1].addEventListener('change', function () {
+      if (this.files.length > 0) {
+        fileNames[1].textContent = this.files[0].name;
+      }
+    });
+  </script>
 </body>
 
 </html>

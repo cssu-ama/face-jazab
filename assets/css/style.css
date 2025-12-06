@@ -1,5 +1,7 @@
 :root {
     --dark-gray: #2d2d2d;
+    --glass-gray: #353535;
+    --primary: #0dcaf0;
 }
 
 * {
@@ -16,8 +18,16 @@ p {
   direction: rtl;
 }
 
+main .icon {
+  width: 22.5px;
+  height: 22.5px;
+  transform: translateY(10px);
+}
+
 header {
     height: 75px !important;
+    background-color: var(--dark-gray);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .dropdown-toggle::after {
@@ -47,6 +57,66 @@ button:active {
 
 main {
   background-color: var(--dark-gray);
+  height: calc(100vh - 75px);
+}
+
+main h2 {
+  font-family: Yekan;
+  font-weight: 900;
+}
+
+main .card {
+  background-color: var(--glass-gray);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  padding-bottom: 0;
+  height: 245px;
+}
+
+main .card-body {
+  transform: translateY(-32.5px);
+}
+
+main .card-body p.card-title {
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  height: 30px !important;
+  background-color: var(--glass-gray);
+  width: 95px;
+  align-self: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+main .card-body img.face {
+  width: 55px;
+}
+
+main .card-body p.sub {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: -15px;
+}
+
+.upload-box {
+  border: 1.75px dashed var(--primary);
+  padding: 7.5px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12.5px;
+  width: 90%;
+  direction: rtl;
+  background-color: #0dcaf030;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  font-size: 14px;
 }
 
 @media (max-width: 992px) {
