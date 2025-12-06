@@ -9,6 +9,13 @@
     font-family: Vazirmatn;
 }
 
+h1,
+h2,
+h3,
+p {
+  direction: rtl;
+}
+
 header {
     height: 75px !important;
 }
@@ -36,6 +43,10 @@ button:focus,
 button:active {
     outline: none !important;
     box-shadow: none !important;
+}
+
+main {
+  background-color: var(--dark-gray);
 }
 
 @media (max-width: 992px) {
