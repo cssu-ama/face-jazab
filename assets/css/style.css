@@ -132,12 +132,41 @@ main .card-body p.sub {
     main {
       height: fit-content !important;
     }
+}
 
+#analyzeBtn {
+  background: #CE31B0;
+  background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+  border-radius: 15px !important;
+  border: none;
+  box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
+  transition: box-shadow 0.8s ease;
+}
 
+#analyzeBtn.fade-shadow {
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+#progressBar {
+  transition: width 0.3s linear;
+}
+
+.modal-footer {
+  border: none;
+}
+
+.modal-footer .btn {
+  background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+  border: none;
+  box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
 }
 
 @media (max-width: 576px) {
   main #cardContainer .card {    
     width: 325px !important;  
+  }
+  
+  main #analyzeBtn {
+    width: 325px !important;
   }
 }

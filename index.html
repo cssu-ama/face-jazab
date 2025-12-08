@@ -85,23 +85,23 @@
       <div id="cardContainer" class="d-flex flex-row gap-3 justify-content-between align-items-center">
         <div class="card" style="width: 25rem;">
           <div class="card-body d-flex flex-column align-items-center">
-            <p class="card-title text-white d-flex justify-content-center align-items-center text-center">زاویه نیم رخ</p>
+            <p class="card-title text-white d-flex justify-content-center align-items-center text-center">زاویه روبه‌رو</p>
             <div class="d-flex flex-row gap-3 justify-content-center align-items-center">
               <div class="d-flex flex-column justify-content-between align-items-center">
                 <img src="./assets/images/correct-icon.png" class="icon">                
-                <img src="./assets/images/profile-correct.png" class="face">
+                <img src="./assets/images/face-correct.png" class="face">
               </div>
 
               <div class="d-flex flex-column justify-content-between align-items-center">
                 <img src="./assets/images/wrong-icon.png" class="icon">                
-                <img src="./assets/images/profile-wrong.png" class="face">
+                <img src="./assets/images/face-wrong.png" class="face">
               </div>
             </div>
             <p class="text-white fw-bold mt-2">
               <span>عکس از </span>
               <span class="text-success">زاویه روبه‌رو</span>
             </p>
-            <p class="sub text-white">(سمت چپ یا راست، فرقی ندارد)</p>
+            <p class="sub text-white">(عکس کاملا واضح، نور مناسب و بدون فیلتر)</p>
 
             <div class="uploadBox upload-box text-info">برای آپلود عکس اینجا ضربه بزن..</div>
             <input class="fileInput" type="file" style="display:none;">
@@ -126,7 +126,7 @@
             </div>
             <p class="text-white fw-bold mt-2">
               <span>عکس از </span>
-              <span class="text-success">زاویه روبه‌رو</span>
+              <span class="text-success">زاویه نیم رخ</span>
             </p>
             <p class="sub text-white">(سمت چپ یا راست، فرقی ندارد)</p>
 
@@ -140,16 +140,39 @@
           </div>
          </div>
       </div>
+
+      <button id="analyzeBtn" type="button" class="btn mt-5 mb-2 text-white fs-4" style="width: 25rem;">شروع آنالیز</button>
+      <p class="text-white" style="font-size: 12px; opacity: 0.8;">(اطلاعات شما کاملا محرمانه است و هیچ‌وقت عکس‌تان پست نخواهد شد)</p>
+
+      <div class="progress mt-3 w-75 visually-hidden" style="height: 20px; direction: rtl;">
+        <div id="progressBar" class="progress-bar bg-success" role="progressbar">0%</div>
+      </div>
+      <div id="status" class="mt-2 text-success visually-hidden" style="direction: rtl !important;"></div>
     </div>
   </main>
 
-
+  <div class="modal fade" id="noFileModal" tabindex="-1" aria-labelledby="noFileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-body text-white" style="direction: rtl;">
+          لطفا هر دو عکس از زاویه نیم‌رخ و روبه‌رو را بارگذاری کنید..
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">باشه</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./assets/bootstrap-5.3.8/js/bootstrap.bundle.min.js"></script>
   <script>
     const uploadBoxes = document.querySelectorAll('.uploadBox');
     const fileInputs = document.querySelectorAll('.fileInput');
     const fileNames = document.querySelectorAll('.fileName');
+    const btn = document.querySelector('#analyzeBtn');
+    const progress = document.querySelector('.progress');
+    const bar = document.getElementById('progressBar');
+    const status = document.querySelector('#status');
 
     uploadBoxes[0].addEventListener('click', function () {
       fileInputs[0].click();
@@ -170,6 +193,78 @@
         fileNames[1].textContent = this.files[0].name;
       }
     });
+
+        // 🔧 نمونه modal API بوت‌استرپ
+    const noFileModalEl = document.getElementById('noFileModal');
+    const noFileModal = new bootstrap.Modal(noFileModalEl);
+
+    btn.addEventListener('click', async () => {
+      const files = [];
+      files.push(fileInputs[0].files);
+      files.push(fileInputs[1].files);
+
+      if (files[0].length === 0 || files[0].length === 0) {
+        noFileModal.show();
+        return;
+      }
+
+      progress.classList.remove("visually-hidden");
+      status.classList.remove("visually-hidden");
+      status.textContent = 'در حال آپلود...';
+      
+      // 1) انیمیشن محو شدن سایه
+      btn.classList.add('fade-shadow');
+
+      fakeProgress(1000 + Math.random() * 2000); // بین 1 تا 3 ثانیه
+
+      // 3) ساخت FormData و ارسال به REST endpoint
+      const faceData = new FormData();
+      for (let i = 0; i < files.length; i++) faceData.append('files', files[i]);
+
+      /*try {
+        const res = await fetch('https://your-api.example.com/api/uploads', {
+          method: 'POST',
+          body: fd,
+          // headers: { }  -- !!! نذار Content-Type اینجا
+        });
+        const json = await res.json();
+        if (res.ok) {
+          setProgress(100);
+          status.textContent = 'ارسال شد';
+        } else {
+           status.textContent = 'خطا در ارسال';
+        }
+      } catch (err) {
+        status.textContent = 'اینترنت شما مشکل دارد';
+      } finally {
+        // برگردوندن کلاس سایه در صورت نیاز
+        setTimeout(() => btn.classList.remove('fade-shadow'), 400);
+        setTimeout(() => progress.classList.add('visually-hidden'), 400);
+        setTimeout(() => status.classList.add('visually-hidden'), 400);
+      }*/
+    });
+
+    function fakeProgress(duration) {
+      const start = Date.now();
+
+      function step() {
+        const elapsed = Date.now() - start;
+        const pct = Math.min(100, Math.floor((elapsed / duration) * 100));
+
+        setProgress(pct);
+
+        if (pct < 100) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      step();
+    }
+
+    function setProgress(value) {
+      bar.style.width = value + '%';
+      bar.textContent = value + '%';
+    }
   </script>
 </body>
 
