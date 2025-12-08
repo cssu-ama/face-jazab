@@ -123,4 +123,21 @@ main .card-body p.sub {
     #navDropdown {
         width: 100% !important;
     }
+
+    main #cardContainer {
+      flex-direction: column !important;
+      gap: 3rem !important;
+    }
+
+    main {
+      height: fit-content !important;
+    }
+
+
+}
+
+@media (max-width: 576px) {
+  main #cardContainer .card {    
+    width: 325px !important;  
+  }
 }
