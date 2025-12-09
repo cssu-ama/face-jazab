@@ -63,7 +63,7 @@ main {
 main h2 {
   font-family: Yekan;
   font-weight: 900;
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 
 main .card {
@@ -176,6 +176,11 @@ main .card-body p.sub {
   main {
     height: fit-content !important;
   }
+}
+
+section {
+  height: fit-content;
+  background-color: var(--dark-gray);
 }
 
 footer {
