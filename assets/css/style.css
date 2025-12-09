@@ -2,6 +2,7 @@
     --dark-gray: #2d2d2d;
     --glass-gray: #353535;
     --primary: #0dcaf0;
+    --golden-glass: rgba(65, 62, 57, 0.65);
 }
 
 * {
@@ -9,6 +10,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Vazirmatn;
+}
+
+body {
+  background-color: var(--dark-gray);
 }
 
 h1,
@@ -170,6 +175,15 @@ main .card-body p.sub {
   main #analyzeBtn {
     width: 325px !important;
   }
+
+  section .card img {
+    height: 1rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  section .card p {
+    font-size: 8px !important;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -181,6 +195,30 @@ main .card-body p.sub {
 section {
   height: fit-content;
   background-color: var(--dark-gray);
+}
+
+section .card {
+  background-color: var(--golden-glass);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  height: fit-content;
+}
+
+section .card > div > div:nth-child(2),
+section .card > div > div:nth-child(3) {
+  border-left: 1px solid #fff;
+}
+
+section .card img {
+  height: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+section .card p {
+  font-size: 12px;
 }
 
 footer {
