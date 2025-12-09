@@ -197,6 +197,10 @@ section {
   background-color: var(--dark-gray);
 }
 
+section > div > img {
+  height: 5rem;
+}
+
 section .card {
   background-color: var(--golden-glass);
   backdrop-filter: blur(5px);
@@ -213,7 +217,7 @@ section .card > div > div {
 
 section .card > div > div:nth-child(2),
 section .card > div > div:nth-child(3) {
-  border-left: 1px solid #fff;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 section .card img {
@@ -223,6 +227,24 @@ section .card img {
 
 section .card p {
   font-size: 12px;
+}
+
+section > div > div:last-child {
+  transform: translateX(-37.5px);
+}
+
+section > div > div  div > img {
+  height: 13rem;
+}
+
+section > div > div  div > img:nth-child(2) {
+  transform: translate(75px, -150px);
+}
+
+section > div > div > img {
+  transform: translate(32.5px, -50px);
+  width: 8rem;
+  paddding: 5px;
 }
 
 footer {
