@@ -207,6 +207,10 @@ section .card {
   height: fit-content;
 }
 
+section .card > div > div {
+  height: 50px;
+}
+
 section .card > div > div:nth-child(2),
 section .card > div > div:nth-child(3) {
   border-left: 1px solid #fff;
