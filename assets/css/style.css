@@ -138,6 +138,29 @@ main .card-body p.sub {
     main {
       height: fit-content !important;
     }
+
+    section .dash-line {
+       display: none;
+    }
+
+    section > div > div > div > img.face {
+      height: 15rem !important;
+    }
+
+    section > div > div > div > img.face:last-child {
+      transform: translate(90px, -175px) !important;
+    }
+
+    body > section > div > div:last-child {
+      transform: translateX(-40px) !important;
+    }
+
+    body > section > div > div > div:nth-child(3) {
+      transform: translateY(-250px) !important;
+    }
+    body > section > div > div > div:nth-child(5) {
+      transform: translateY(-500px) !important;
+    }
 }
 
 #analyzeBtn {
