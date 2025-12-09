@@ -269,7 +269,7 @@ section .card p {
   font-size: 12px;
 }
 
-section > div > div:last-child {
+#faceSamples {
   transform: translateX(-37.5px);
 }
 
