@@ -190,6 +190,23 @@ main .card-body p.sub {
   main {
     height: fit-content !important;
   }
+
+  section .face {
+    height: 10rem !important;
+  }
+  
+  section > div > div  div > img.face:nth-child(2) {
+    transform: translate(57.5px, -115px);
+  }
+
+  section > div > div:last-child {
+    transform: translateX(-25.5px) !important;
+  }
+
+  section > div > div > img {
+    transform: translate(25px, -35px) !important;
+    width: 8rem;
+  }
 }
 
 section {
@@ -244,7 +261,6 @@ section > div > div  div > img:nth-child(2) {
 section > div > div > img {
   transform: translate(32.5px, -50px);
   width: 8rem;
-  paddding: 5px;
 }
 
 footer {
