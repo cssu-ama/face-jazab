@@ -170,3 +170,15 @@ main .card-body p.sub {
     width: 325px !important;
   }
 }
+
+@media (max-width: 1200px) {
+  main {
+    height: fit-content !important;
+  }
+}
+
+footer {
+  height: 75px !important;
+  background-color: var(--dark-gray);
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+}
