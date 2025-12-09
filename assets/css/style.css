@@ -252,7 +252,7 @@ section .card {
 }
 
 section .card > div > div {
-  height: 50px;
+  height: 65px;
 }
 
 section .card > div > div:nth-child(2),
