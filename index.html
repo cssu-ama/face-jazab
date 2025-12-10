@@ -169,8 +169,7 @@
       <h2 style="direction: rtl;" class="text-white">می‌خوای همین الان نقاط ضعفت رو مرحله به مرحله رفع کنی؟</h2>    
       <img src="./assets/images/arrow-icon.png" alt="arrow-icon" />
       
-
-      <div class="card w-100">
+      <div class="card w-100" id="statistics">
         <div class="card-body d-flex flex-row justify-content-evenly align-items-center">
           <div class="d-flex flex-column justify-content-between align-items-center w-100 px-2">
             <img src="./assets/images/face-icon.png" />
@@ -192,41 +191,96 @@
       <div id="faceSamples" class="d-flex flex-row justify-content-evenly flex-wrap align-items-center gap-lg-3">
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img class="face" src="./assets/images/before-1.png" />
-          <img class="face" src="./assets/images/after-1.png" />
+          <img class="face after" src="./assets/images/after-1.png" />
         </div>
 
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img class="face" src="./assets/images/before-2.png" />
-          <img class="face" src="./assets/images/after-2.png" />
+          <img class="face after" src="./assets/images/after-2.png" />
         </div>
 
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img class="face" src="./assets/images/before-3.png" />
-          <img class="face" src="./assets/images/after-3.png" />
+          <img class="face after" src="./assets/images/after-3.png" />
         </div>
 
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img class="face" src="./assets/images/before-4.png" />
-          <img class="face" src="./assets/images/after-4.png" />
+          <img class="face after" src="./assets/images/after-4.png" />
         </div>
 
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img class="face" src="./assets/images/before-5.png" />
-          <img class="face" src="./assets/images/after-5.png" />
+          <img class="face after" src="./assets/images/after-5.png" />
         </div>
       </div>
 
-      <div class="card w-100 p-3" style="margin-top: -100px;">
-        <div class="card-body d-flex flex-row justify-content-center align-items-center">
+      <div class="card w-100 p-3" style="margin-top: -100px;" id="course">        
+        <div class="card-body">
+         <div class="h-100 d-flex flex-row justify-content-between align-items-center gap-4">
+          <div class="w-75 d-flex flex-column justify-content-center align-items-end">
+            <img src="./assets/images/course-title.png" style="width: 300px; height: auto;" />
+            <h3 class="mb-4">آموزش ارتقای ظاهری مردان بدون جراحی!</h3>
             <div>
-              <img src="./assets/images/course-banner.png" alt="عکس هنوز به دستم نرسیده" />
-            </div>
-            <div class="d-flex flex-column justify-content-between align-items-end">
-              <div>
-                <h2></h2>
-                <p>آموزش ارتقای ظاهری مردان بدون جراحی!</p>
+              <div class="d-flex flex-row justify-content-between align-items-center gap-4">
+                <div class="d-flex flex-column justify-content-between align-items-center">
+                  <div style="border-radius: 5px; width: 125px;" class="border border-white mb-3 p-2 d-flex flex-column justify-content-center align-items-center text-center">
+                    <p class="text-white fw-bolder mb-0">قیمت اصلی:</p>
+                    <p class="text-danger fw-bolder text-decoration-line-through mb-0">10/000/000 تومان</p>
+                  </div>
+
+                  <div style="border-radius: 5px; width: 200px;" class="border border-white p-2 d-flex flex-column justify-content-center align-items-center text-center">
+                    <p class="text-white fs-6 fw-bolder mb-0">قیمت ویژه کاربران تحلیل:</p>
+                    <p class="text-success fs-6 fw-bolder text-decoration-line-through mb-0">2/980/000 تومان</p>
+                  </div>
+                </div> 
+                
+                <ul style="list-style: none;" class="p-0">
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>برنامه کامل زاویه فک سازی</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>رفع پف چهره</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>افزایش تقارن صورت</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>بهبود پوست و کاهش چربی</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>افزایش جذابیت چشم‌ها</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>آموزش کامل LOOKSMAXING مردان</span>
+                  </li>
+
+                  <li class="text-white text-start">
+                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                    <span>به بهترین نسخه خودت تبدیل شو - همین الان!</span>
+                  </li>
+                </ul>
+
+                
               </div>
             </div>
+          </div>
+          <img id="course-banner" class="w-25" src="./assets/images/course-banner.png" style="border-radius: 20px;" alt="" />
+      </div>
+
+          <a class="py-4 btn mt-5 mb-2 text-white fs-4" style="width: 25rem;">می‌خوام جذاب شم!</a>
+          <p class="text-white">(دسترسی فوری، بدون نیاز به مشاوره)</p>
         </div>
       </div>
     </div>
