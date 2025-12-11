@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fa">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>فیس جذاب</title>
+  <link href="../assets/bootstrap-5.3.8/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/fonts/Vazirmatn-font-face.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    #copyBtn {
+      border: none;
+      outline: none;
+      padding: 3px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 8.5px;
+      width: 55px;
+      direction: rtl;
+      background-color: #0dcaf030;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      -webkit-backdrop-filter: blur(5px);
+      font-size: 14px;
+      color: var(--primary);
+      transition: all 0.5s ease;
+    }
+
+    #copyBtn:hover {
+      background-color: #0dcaf060;
+    }
+
+    #cardNumber {
+      color: rgba(182, 210, 232, 1);
+      font-weight: 900;
+      font-size: 2rem;
+    }
+
+    @media (max-width: 576px) {
+      #cardNumber {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-up h-100">
+      <div class="container d-flex flex-row justify-content-between h-100">
+
+        <button id="navMobileBtn" class="navbar-toggler order-3 order-lg-2 text-white" type="button"
+          data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+          aria-label="Toggle navigation">
+          |||
+        </button>
+
+        <a class="order-1 order-lg-1 h-75" href="#">
+          <img src="../assets/images/instagram.png" alt="instagram" class="h-100">
+        </a>
+
+        <div class="offcanvas bg-dark offcanvas-end order-3 order-lg-2 h-100" tabindex="-1" id="offcanvasDarkNavbar"
+          aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-center gap-4 align-items-end flex-grow-1 pe-3">
+              <li id="navDropdown" class="nav-item dropdown order-lg-1 order-3">
+                <a class="nav-link text-white text-start dropdown-toggle" href="#" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg class="custom-triangle" width="16" height="12" viewBox="0 0 16 12"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path d="M2 2 L8 10 L14 2" fill="none" stroke="currentColor" stroke-width="1.6"
+                      stroke-linejoin="round" stroke-linecap="round" />
+                  </svg>
+                  پشتیبانی
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item text-white" href="https://wa.me/+989925027625" target="_blank">واتساپ</a>
+                  </li>
+                  <li><a class="dropdown-item text-white" href="https://t.me/facejazaab_admin"
+                      target="_blank">تلگرام</a></li>
+                </ul>
+              </li>
+              <li class="nav-item order-lg-2 order-2">
+                <a class="nav-link text-white" href="#">دوره</a>
+              </li>
+              <li class="nav-item order-lg-3 order-1">
+                <a class="nav-link text-white active" aria-current="page" href="#">خانه</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="order-2 order-lg-3 h-75" href="#">
+          <img src="../assets/images/logo.png" alt="logo" class="h-100">
+        </a>
+
+      </div>
+    </nav>
+  </header>
+
+
+  <main class="my-5">
+    <div class="container">
+      <div class="card payment">        
+        <div class="card-body d-flex flex-column justify-content-between align-items-center">
+          <img src="../assets/images/cash-card-icon.png" width="75" height="75"/>
+          <h3 class="text-white fw-bold mt-3 mb-1">مبلغ پرداخت:</h3>
+          <h3 class="text-success fw-bold mt-0 pb-2" style="border-bottom: 2px dashed gray;">2/980/000 تومان</h3>
+          <p class="text-white">شماره کارت جهت پرداخت:</p>
+          <div class="card-number-wrapper d-flex flex-row justify-content-center align-items-center gap-2">
+            <span id="cardNumber" data-card="5678 2222 3333 4444" aria-label="شماره کارت">
+              5678 2222 3333 4444
+            </span>
+
+            <button id="copyBtn" type="button" aria-live="polite" aria-label="کپی شماره کارت">
+              کپی
+            </button>
+
+            <span id="copyStatus" role="status" aria-hidden="true" style="margin-left:8px;"></span>
+          </div>
+
+          <p class="text-white">به نام: امیرمحمد فیروزی</p>
+          <p class="text-white">بانک تجارت</p>
+
+          <div class="card">
+            <div class="card-body">
+              <p>در حال توسعه...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="h-100 container d-flex flex-column justify-content-center align-items-center text-center">
+      <p class="mb-0 text-white text-center" style="direction: rtl;">تمام حقوق مادی و معنوی سایت برای جذاب شو محفوظ است.</p>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="noFileModal" tabindex="-1" aria-labelledby="noFileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-body text-white" style="direction: rtl;">
+          کپی شد..!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">باشه</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/bootstrap-5.3.8/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+
+  <script>
+  (function () {
+    const copyBtn = document.getElementById('copyBtn');
+    const cardEl = document.getElementById('cardNumber');
+    const statusEl = document.getElementById('copyStatus');
+    const noFileModalEl = document.getElementById('noFileModal');
+    const noFileModal = new bootstrap.Modal(noFileModalEl);
+
+    function getCardText() {
+      // اگر می‌خواهی هنگام کپی، فاصله‌ها حذف شوند:
+      return (cardEl.dataset.card || cardEl.textContent).replace(/\s+/g, '');
+      // اگر می‌خواهی فاصله‌ها حفظ شوند، از خط بالا به:
+      // return cardEl.dataset.card || cardEl.textContent;
+    }
+
+    async function copyToClipboard(text) {
+      // تلاش با API مدرن
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (e) {
+          // ادامه به روش قدیمی
+        }
+      }
+
+      // روش قدیمی fallback
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      const text = getCardText();
+      const ok = await copyToClipboard(text);
+
+      if (ok) {
+        noFileModal.show();
+      }
+    });
+  })();
+  </script>
+</body>
+
+</html>

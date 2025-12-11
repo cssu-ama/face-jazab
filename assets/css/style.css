@@ -72,7 +72,7 @@ main h2 {
   font-size: 3rem;
 }
 
-main .card {
+main .input-card {
   background-color: var(--glass-gray);
   border: 1px solid rgba(255, 255, 255, 0.5);
   opacity: 0.8;
@@ -84,11 +84,22 @@ main .card {
   height: 245px;
 }
 
-main .card-body {
+main .payment {
+  background-color: var(--glass-gray);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  padding-bottom: 0;
+}
+
+main .input-card .card-body {
   transform: translateY(-32.5px);
 }
 
-main .card-body p.card-title {
+main .input-card .card-body p.card-title {
   font-size: 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
