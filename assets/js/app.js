@@ -5,6 +5,7 @@ const btn = document.querySelector('#analyzeBtn');
 const progress = document.querySelector('.progress');
 const bar = document.getElementById('progressBar');
 const status = document.querySelector('#status');
+const courseBanner = document.querySelector('#course-banner');
 
 uploadBoxes[0].addEventListener('click', function () {
   fileInputs[0].click();
@@ -93,3 +94,17 @@ function setProgress(value) {
   bar.style.width = value + '%';
   bar.textContent = value + '%';
 }
+
+function updateImage() {
+  const width = window.innerWidth;
+
+  if (width < 992) {
+    courseBanner.src = "./assets/images/course-banner.jpg";
+  } else {
+    courseBanner.src = "./assets/images/course-banner-lg.png";
+  }
+}
+
+updateImage();
+
+window.addEventListener("resize", updateImage);

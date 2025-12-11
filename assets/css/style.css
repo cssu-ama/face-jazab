@@ -143,6 +143,10 @@ main .card-body p.sub {
     section .dash-line {
        display: none;
     }
+
+    #course-banner-wrapper {
+      width: 100% !important;
+    }
 }
 
 #analyzeBtn {
@@ -181,7 +185,7 @@ main .card-body p.sub {
     width: 325px !important;
   }
 
-  section .card img {
+  #statistics img {
     height: 1rem !important;
     margin-bottom: 0.25rem !important;
   }
@@ -210,9 +214,9 @@ section {
   background-color: var(--dark-gray);
 }
 
-section > div > img {
+/**section > div > img {
   height: 5rem;
-}
+}*/
 
 section .card {
   background-color: var(--golden-glass);
@@ -248,7 +252,7 @@ section .card p {
   margin-bottom: 5rem;
 }
 
-section > div > div  div > img {
+section > div > div  div > img.face {
   height: 13rem;
 }
 
@@ -260,10 +264,10 @@ section > div > div  div > img.after:nth-child(2) {
   height: 13rem;
 }
 
-#course-banner {
+/**#course-banner {
   height: 350px;
   width: auto !important;
-}
+}*/
 
 #course {
   height: fit-content;
@@ -297,6 +301,10 @@ section > div > div  div > img.after:nth-child(2) {
   border: none;
   box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
   transition: box-shadow 0.8s ease;
+}
+
+#course-banner-wrapper {
+  width: 25%;
 }
 
 footer {
