@@ -42,6 +42,31 @@
         font-size: 1rem;
       }
     }
+   
+    #payment-notes {
+      border: none;
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 0;
+    }
+   
+    #payment-notes * {
+      outline: none;
+      border: none;
+    }
+
+    #payment-notes .card-body {
+      border-radius: 10px;
+      background-color: rgba(5, 20, 5, 0.85);
+      outline: none;
+      border: none;
+    }
+
+    li::marker {
+      color: rgba(5, 140, 5, 1);
+      font-size: 24px;
+      margin: 0;
+    }
   </style>
 </head>
 
@@ -127,15 +152,33 @@
           <p class="text-white">به نام: امیرمحمد فیروزی</p>
           <p class="text-white">بانک تجارت</p>
 
-          <div class="card">
+          <div class="card" id="payment-notes">
             <div class="card-body">
-              <p>در حال توسعه...</p>
+              <ul class="text-white">
+                <li>
+                  فعال‌سازی دوره معمولا کمتر از 30 دقیقه انجام می‌شود.
+                </li>
+                <li>
+                  در ساعات غیراداری ممکن است کمی بیشتر زمان ببرد، اما در هر حالت حداکثر طی 24 ساعت دسترسی شما باز خواهد شد.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
   </main>
+
+  <section class="my-5">
+    <div class="container">
+      <div class="card payment">        
+        <div class="card-body d-flex flex-column justify-content-between align-items-center">
+          <h3 class="text-warning">برای فعال‌سازی دوره:</h3>
+          <p>رسید پرداخت را به همراه اسم </p>
+        </div>
+      </div>
+    </div>
+  </section> 
 
   <footer>
     <div class="h-100 container d-flex flex-column justify-content-center align-items-center text-center">
