@@ -12,6 +12,10 @@
     font-family: Vazirmatn;
 }
 
+.navbar-nav .nav-link.active {
+  color: rgba(255, 193, 7, 1) !important;
+}
+
 body {
   background-color: var(--dark-gray);
 }
