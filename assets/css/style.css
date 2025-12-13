@@ -19,6 +19,7 @@ body {
 h1,
 h2,
 h3,
+h4,
 p,
 li {
   direction: rtl;
@@ -63,7 +64,7 @@ button:active {
 
 main {
   background-color: var(--dark-gray);
-  height: calc(100vh - 75px);
+  height: fit-content;
 }
 
 main h2 {
@@ -343,4 +344,31 @@ footer {
 
 .fs-four {
   font-size: 12px !important;
+}
+
+.m-16 {
+  margin: 16px !important;
+}
+
+.my-16 {
+  margin-top: 16px !important;
+  margin-bottom: 16px !important;
+}
+
+.m-10 {
+  margin: 10px !important;
+}
+
+.my-10 {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.m-6 {
+  margin: 6px !important;
+}
+
+.my-6 {
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
 }

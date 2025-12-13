@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>فیس جذاب</title>
+  <title>فیس جذاب | دوره</title>
   <link href="../assets/bootstrap-5.3.8/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/fonts/Vazirmatn-font-face.css">
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -12,7 +12,6 @@
     #page-title h2 {
       font-family: Yekan;
       font-weight: 900;
-      font-size: 3rem;
     }
 
     #page-title p {
@@ -44,13 +43,10 @@
     #cardNumber {
       color: rgba(182, 210, 232, 1);
       font-weight: 900;
-      font-size: 2rem;
     }
 
     @media (max-width: 576px) {
-      #cardNumber {
-        font-size: 1rem;
-      }
+
     }
    
     #payment-notes {
@@ -74,7 +70,7 @@
 
     li::marker {
       color: rgba(5, 140, 5, 1);
-      font-size: 24px;
+      font-size: 30px;
       margin: 0;
     }
 
@@ -100,7 +96,7 @@
           |||
         </button>
 
-        <a class="order-1 order-lg-1 h-75" href="#">
+        <a class="order-1 order-lg-1 h-100" href="#">
           <img src="../assets/images/instagram.png" alt="instagram" class="h-100">
         </a>
 
@@ -113,7 +109,7 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-center gap-4 align-items-end flex-grow-1 pe-3">
               <li id="navDropdown" class="nav-item dropdown order-lg-1 order-3">
-                <a class="nav-link text-white text-start dropdown-toggle" href="#" role="button"
+                <a class="nav-link text-white text-start dropdown-toggle fs-three" href="#" role="button"
                   data-bs-toggle="dropdown" aria-expanded="false">
                   <svg class="custom-triangle" width="16" height="12" viewBox="0 0 16 12"
                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -123,23 +119,23 @@
                   پشتیبانی
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item text-white" href="https://wa.me/+989925027625" target="_blank">واتساپ</a>
+                  <li><a class="dropdown-item text-white fs-three" href="https://wa.me/+989925027625" target="_blank">واتساپ</a>
                   </li>
-                  <li><a class="dropdown-item text-white" href="https://t.me/facejazaab_admin"
+                  <li><a class="dropdown-item text-white fs-three" href="https://t.me/facejazaab_admin"
                       target="_blank">تلگرام</a></li>
                 </ul>
               </li>
               <li class="nav-item order-lg-2 order-2">
-                <a class="nav-link text-white" href="#">دوره</a>
+                <a class="nav-link text-white fs-three active" href="#">دوره</a>
               </li>
               <li class="nav-item order-lg-3 order-1">
-                <a class="nav-link text-white active" aria-current="page" href="../index.html">خانه</a>
+                <a class="nav-link text-white fs-three" aria-current="page" href="../index.html">خانه</a>
               </li>
             </ul>
           </div>
         </div>
 
-        <a class="order-2 order-lg-3 h-75" href="#">
+        <a class="order-2 order-lg-3 h-100" href="#">
           <img src="../assets/images/logo.png" alt="logo" class="h-100">
         </a>
 
@@ -147,48 +143,48 @@
     </nav>
   </header>
 
-  <section id="page-title" class="mt-5">
+  <section id="page-title" class="my-3">
     <div class="container">
       <h2 class="text-center text-white fs-one">
         <span>پرداخت و دریافت فوری </span>
         <span class="text-warning">دوره جذاب شو!</span>
       </h2>
 
-      <p class="mb-5 text-center">بعد از پرداخت، دسترسی دوره برای شما باز می‌شود.</p>
+      <p class="text-center fs-three">بعد از پرداخت، دسترسی دوره برای شما باز می‌شود.</p>
     </div>
   </section>
 
 
-  <main class="my-5">
+  <main>
     <div class="container">
       <div class="card payment">        
         <div class="card-body d-flex flex-column justify-content-between align-items-center">
           <img src="../assets/images/cash-card-icon.png" width="75" height="75"/>
-          <h3 class="text-white fw-bold mt-3 mb-1">مبلغ پرداخت:</h3>
-          <h3 class="text-success fw-bold mt-0 pb-2" style="border-bottom: 2px dashed gray;">2/980/000 تومان</h3>
-          <p class="text-white">شماره کارت جهت پرداخت:</p>
+          <h3 class="text-white fw-bold mt-3 mb-1 fs-two">مبلغ پرداخت:</h3>
+          <h3 class="text-success fw-bold mt-0 pb-2 fs-three" style="border-bottom: 2px dashed gray;">2/980/000 تومان</h3>
+          <p class="text-white fs-three">شماره کارت جهت پرداخت:</p>
           <div class="card-number-wrapper d-flex flex-row justify-content-center align-items-center gap-2">
-            <span id="cardNumber" data-card="5678 2222 3333 4444" aria-label="شماره کارت">
+            <span class="fs-three" id="cardNumber" data-card="5678 2222 3333 4444" aria-label="شماره کارت">
               5678 2222 3333 4444
             </span>
 
-            <button id="copyBtn" type="button" aria-live="polite" aria-label="کپی شماره کارت">
+            <button class="fs-four" id="copyBtn" type="button" aria-live="polite" aria-label="کپی شماره کارت">
               کپی
             </button>
 
             <span id="copyStatus" role="status" aria-hidden="true" style="margin-left:8px;"></span>
           </div>
 
-          <p class="text-white">به نام: امیرمحمد فیروزی</p>
-          <p style="color: rgba(210, 210, 210, 0.85);">بانک تجارت</p>
+          <p class="text-white fs-three">به نام: امیرمحمد فیروزی</p>
+          <p class="fs-four" style="color: rgba(210, 210, 210, 0.85);">بانک تجارت</p>
 
           <div class="card" id="payment-notes">
             <div class="card-body">
               <ul style="color: rgba(210, 210, 210, 0.85)">
-                <li>
+                <li class="fs-three">
                   فعال‌سازی دوره معمولا کمتر از 30 دقیقه انجام می‌شود.
                 </li>
-                <li>
+                <li class="fs-three">
                   در ساعات غیراداری ممکن است کمی بیشتر زمان ببرد، اما در هر حالت حداکثر طی 24 ساعت دسترسی شما باز خواهد شد.
                 </li>
               </ul>
@@ -199,23 +195,23 @@
     </div>
   </main>
 
-  <section class="my-5">
+  <section class="my-3">
     <div class="container">
       <div class="card payment">        
         <div class="card-body d-flex flex-column justify-content-between align-items-center">
-          <h3 class="text-warning mb-4">برای فعال‌سازی دوره:</h3>
-          <h4 class="text-white text-center fw-normal fs-6">رسید پرداخت را به همراه اسم فامیلی و شماره موبایلتون در واتساپ یا تلگرام ارسال ارسال کنید (فقط یکی).</h4>
-          <div style="height: fit-content;">
-          <a class="p-4 btn text-white fs-4" style="width: 315px;">
+          <h3 class="text-warning mb-4 fs-two">برای فعال‌سازی دوره:</h3>
+          <h4 class="text-white text-center fw-normal fs-three">رسید پرداخت را به همراه اسم فامیلی و شماره موبایلتون در واتساپ یا تلگرام ارسال ارسال کنید (فقط یکی).</h4>
+          <div style="height: fit-content;" class="mt-3 d-flex flex-lg-row flex-column gap-3 justify-content-between align-items-center">
+          <a class="p-3 mx-auto btn text-white" style="width: 315px;">
             <img src="../assets/images/instagram-icon.png" />
-            <h4>ارسال رسید به پشتیبانی</h4>
-            <p>(اینستاگرام)</p>
+            <h4 class="fs-three">ارسال رسید به پشتیبانی</h4>
+            <p class="fs-four">(اینستاگرام)</p>
           </a>
 
-          <a class="p-4 btn text-white fs-4" style="width: 315px;">
+          <a class="p-3 mx-auto btn text-white" style="width: 315px;">
             <img src="../assets/images/telegram-icon.png" />
-            <h4>ارسال رسید به پشتیبانی</h4>
-            <p>(تلگرام)</p>
+            <h4 class="fs-three">ارسال رسید به پشتیبانی</h4>
+            <p class="fs-four">(تلگرام)</p>
           </a>
           </div>
         </div>
@@ -225,18 +221,18 @@
 
   <footer>
     <div class="h-100 container d-flex flex-column justify-content-center align-items-center text-center">
-      <p class="mb-0 text-white text-center" style="direction: rtl;">تمام حقوق مادی و معنوی سایت برای جذاب شو محفوظ است.</p>
+      <p class="mb-0 text-white text-center fs-three">تمام حقوق مادی و معنوی سایت برای جذاب شو محفوظ است.</p>
     </div>
   </footer>
 
   <div class="modal fade" id="noFileModal" tabindex="-1" aria-labelledby="noFileModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content bg-dark">
-        <div class="modal-body text-white" style="direction: rtl;">
+        <div class="modal-body text-white fs-three" style="direction: rtl;">
           کپی شد..!
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">باشه</button>
+          <button type="button" class="btn btn-secondary fs-three" data-bs-dismiss="modal">باشه</button>
         </div>
       </div>
     </div>
