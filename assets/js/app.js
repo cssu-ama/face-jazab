@@ -95,7 +95,7 @@ function setProgress(value) {
   bar.textContent = value + '%';
 }
 
-function updateImage() {
+/**function updateImage() {
   const width = window.innerWidth;
 
   if (width < 992) {
@@ -107,4 +107,4 @@ function updateImage() {
 
 updateImage();
 
-window.addEventListener("resize", updateImage);
+window.addEventListener("resize", updateImage);*/
