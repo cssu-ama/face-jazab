@@ -200,10 +200,6 @@ main .card-body p.sub {
     height: 1rem !important;
     margin-bottom: 0.25rem !important;
   }
-
-  section .card p {
-    font-size: 8px !important;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -289,7 +285,7 @@ section > div > div  div > img.after:nth-child(2) {
   color: #fff;
   font-weight: 600;
   font-size: 1.25rem;
-   text-shadow:
+  text-shadow:
     -1px -1px 0 black,
      1px -1px 0 black,
     -1px  1px 0 black,
@@ -322,4 +318,29 @@ footer {
   height: 75px !important;
   background-color: var(--dark-gray);
   border-top: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+
+/**
+ * 8
+ * 5
+ * 3
+ * 2
+ * 1
+ * 1
+*/
+.fs-one {
+  font-size: 48px !important;
+}
+
+.fs-two {
+  font-size: 30px !important;
+}
+
+.fs-three {
+  font-size: 18px !important;
+}
+
+.fs-four {
+  font-size: 12px !important;
 }
