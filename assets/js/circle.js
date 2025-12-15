@@ -10,7 +10,7 @@
 
   document.body.appendChild(glassLayer);
 
-  const count = Math.floor(Math.random() * 21) + 10; // 10 تا 30
+  const count = Math.floor(Math.random() * 11) + 5; // 10 تا 30
 
   // محاسبه تعداد ستون و ردیف بر اساس تعداد دایره‌ها
   const cols = Math.ceil(Math.sqrt(count));
