@@ -4,9 +4,8 @@
   glassLayer.style.inset = "0";
   glassLayer.style.pointerEvents = "none";
   glassLayer.style.zIndex = "0";
-  glassLayer.style.height = "100%";
+  glassLayer.style.height = "100vh";
   glassLayer.style.width = "100%";
-  // glassLayer.style.height = "100%";
 
   document.body.appendChild(glassLayer);
 
