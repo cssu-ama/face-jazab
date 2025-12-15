@@ -10,6 +10,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Vazirmatn;
+    z-index: 100;
 }
 
 .navbar-nav .nav-link.active {
@@ -33,6 +34,7 @@ main .icon {
   width: 22.5px;
   height: 22.5px;
   transform: translateY(10px);
+  z-index: 101;
 }
 
 header {
@@ -375,4 +377,10 @@ footer {
 .my-6 {
   margin-top: 6px !important;
   margin-bottom: 6px !important;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 101 !important;
 }
