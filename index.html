@@ -24,12 +24,25 @@
     opacity: 0.6;
   }
 }
+
+#courseTitle img {
+  width: 500px;
+  height: auto !important;
+}
+
+@media (max-width: 768px) {
+  #courseTitle img {
+    width: 100%;
+    height: auto !important;
+    align-self: center;
+  }
+}
 </style>
 </head>
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg fixed-up h-100">
+    <nav class="navbar navbar-expand-lg fixed-up h-100 py-2">
       <div class="container d-flex flex-row justify-content-between h-100">
 
         <button id="navMobileBtn" class="navbar-toggler order-3 order-lg-2 text-white" type="button"
@@ -38,10 +51,7 @@
           |||
         </button>
 
-        <a class="order-1 order-lg-1 h-100" href="https://instagram.com/facejazaab"
-                      target="_blank">
-          <img src="./assets/images/instagram.png" alt="instagram" class="h-100">
-        </a>
+        <a id="instagram" class="order-1 order-lg-1 h-100" href="https://instagram.com/facejazaab" target="_blank"></a>
 
         <div class="offcanvas bg-dark offcanvas-end order-3 order-lg-2 h-100" tabindex="-1" id="offcanvasDarkNavbar"
           aria-labelledby="offcanvasDarkNavbarLabel">
@@ -78,9 +88,7 @@
           </div>
         </div>
 
-        <a class="order-2 order-lg-3 h-100" href="#">
-          <img src="./assets/images/logo.png" alt="logo" class="h-100">
-        </a>
+        <a id="logo" class="order-2 order-lg-3 h-100" href="#"></a>
 
       </div>
     </nav>
@@ -100,20 +108,14 @@
 
       <p class="mb-5 fs-three" style="color: rgba(210, 210, 210, 0.85);">چهره‌ات رو بررسی می‌کنم و نقاط قوت و ضعف رو دقیق بهت نشون می‌دم.</p>
 
-      <div id="cardContainer" class="d-flex flex-row gap-3 justify-content-between align-items-center">
-        <div class="card input-card" style="width: 25rem;">
+      <div id="cardContainer" class="w-100 d-flex flex-row gap-3 justify-content-between align-items-center">
+        <div class="card input-card w-50">
           <div class="card-body d-flex flex-column align-items-center">
             <p class="card-title text-white d-flex justify-content-center align-items-center text-center fs-four">زاویه روبه‌رو</p>
             <div class="d-flex flex-rw gap-3 justify-content-center align-items-center">
-              <div class="d-flex flex-column justify-content-between align-items-center">
-                <img src="./assets/images/correct-icon.png" class="icon">                
-                <img src="./assets/images/face-correct.png" class="face">
-              </div>
+              <div id="faceCorrect" class="d-flex flex-column justify-content-between align-items-center"></div>
 
-              <div class="d-flex flex-column justify-content-between align-items-center">
-                <img src="./assets/images/wrong-icon.png" class="icon">                
-                <img src="./assets/images/face-wrong.png" class="face">
-              </div>
+              <div id="faceWrong" class="d-flex flex-column justify-content-between align-items-center"></div>
             </div>
             <p class="text-white fw-bold fs-three mt-2">
               <span>عکس از </span>
@@ -128,19 +130,13 @@
           </div>
          </div>
 
-        <div class="card input-card" style="width: 25rem;">
+        <div class="card input-card w-50">
           <div class="card-body d-flex flex-column align-items-center">
             <p class="card-title text-white d-flex justify-content-center align-items-center text-center fs-four">زاویه نیم رخ</p>
             <div class="d-flex flex-row gap-3 justify-content-center align-items-center">
-              <div class="d-flex flex-column justify-content-between align-items-center">
-                <img src="./assets/images/correct-icon.png" class="icon">                
-                <img src="./assets/images/profile-correct.png" class="face">
-              </div>
+              <div id="profileCorrect" class="d-flex flex-column justify-content-between align-items-center"></div>
 
-              <div class="d-flex flex-column justify-content-between align-items-center">
-                <img src="./assets/images/wrong-icon.png" class="icon">                
-                <img src="./assets/images/profile-wrong.png" class="face">
-              </div>
+              <div id="profileWrong" class="d-flex flex-column justify-content-between align-items-center"></div>
             </div>
             <p class="text-white fw-bold fs-three mt-2">
               <span>عکس از </span>
@@ -185,109 +181,91 @@
 
   <section class="my-3">
     <div style="z-index: 100 !important;" class="container d-flex flex-column justify-content-between align-items-center text-center gap-2">
-      <h2 style="direction: rtl;" class="text-white fs-two">می‌خوای همین الان نقاط ضعفت رو مرحله به مرحله رفع کنی؟</h2>    
-      <img src="./assets/images/arrow-icon.png" alt="arrow-icon" />
+      <h2 style="direction: rtl;" class="text-white fs-two">می‌خوای همین الان نقاط ضعفت رو مرحله به مرحله رفع کنی؟</h2>
+      <div id="arrowIcon"></div>    
       
       <div class="card w-100" id="statistics">
         <div class="card-body d-flex flex-row justify-content-evenly align-items-center">
           <div class="d-flex flex-column justify-content-between align-items-center w-100 px-2">
-            <img src="./assets/images/face-icon.png" />
+            <div id="faceIcon"></div>
             <p class="text-white w-75 fs-four">بیش از 600 نفر ارتقای واقعی چهره</p>
           </div>
 
           <div class="d-flex flex-column justify-content-between align-items-center w-100 px-2">
-            <img src="./assets/images/view-icon.png" />
+            <div id="viewIcon"></div>
             <p class="text-white w-75 fs-four">بالای 1/5 میلیون بازدید ماهیانه</p>
           </div>
 
           <div class="d-flex flex-column justify-content-between align-items-center w-100 px-2">
-            <img src="./assets/images/analyze-icon.png" />
+            <div id="analyzeIcon"></div>
             <p class="text-white w-75 fs-four">بیشتر از 14 هزار آنالیز موفق</p>
           </div>
         </div>
       </div>
 
       <div id="faceSamples" class="d-flex flex-row justify-content-evenly flex-wrap align-items-center gap-lg-3">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <img class="face" src="./assets/images/before-1.png" />
-          <img class="face after" src="./assets/images/after-1.png" />
-        </div>
-
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <img class="face" src="./assets/images/before-2.png" />
-          <img class="face after" src="./assets/images/after-2.png" />
-        </div>
-
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <img class="face" src="./assets/images/before-3.png" />
-          <img class="face after" src="./assets/images/after-3.png" />
-        </div>
-
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <img class="face" src="./assets/images/before-4.png" />
-          <img class="face after" src="./assets/images/after-4.png" />
-        </div>
-
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <img class="face" src="./assets/images/before-5.png" />
-          <img class="face after" src="./assets/images/after-5.png" />
-        </div>
-
+        <div id="faceOne" class="d-flex flex-column justify-content-center align-items-center"></div>
+        <div id="faceTwo" class="d-flex flex-column justify-content-center align-items-center"></div>
+        <div id="faceThree" class="d-flex flex-column justify-content-center align-items-center"></div>
+        <div id="faceFour" class="d-flex flex-column justify-content-center align-items-center"></div>
+        <div id="faceFive" class="d-flex flex-column justify-content-center align-items-center"></div>
       </div>
 
       <div class="card w-100 p-lg-3 p-0" style="margin-top: -100px;" id="course">        
         <div class="card-body">
          <div class="h-100 d-flex flex-lg-row flex-column justify-content-between align-items-center gap-4">
           <div class="w-lg-75 w-100 d-flex flex-column order-lg-1 order-2 justify-content-center align-items-end align-self-end">
-            <img src="./assets/images/course-title.png" style="width: 300px; height: auto !important;" />
-            <h3 class="mb-4 fs-three">آموزش ارتقای ظاهری مردان بدون جراحی!</h3>
+            <div id="courseTitle" class="align-self-lg-end align-self-center"></div>
+            <h3 class="mb-4 fs-sm-2 fs-3 align-self-lg-end align-self-center">آموزش ارتقای ظاهری مردان بدون جراحی!</h3>
             <div class="w-100">
               <div class="d-flex flex-lg-row flex-column justify-content-between align-items-lg-center align-items-end gap-4">
                 <div class="w-lg-25 w-100 d-flex flex-column order-lg-1 order-2 justify-content-between align-items-center">
-                  <div style="border-radius: 5px; width: 125px;" class="border border-white mb-3 p-2 d-flex flex-column justify-content-center align-items-center text-center">
-                    <p class="text-white fw-bolder mb-0 fs-four">قیمت اصلی:</p>
-                    <p class="text-danger fw-bolder text-decoration-line-through mb-0 fs-four">10/000/000 تومان</p>
+                  <div style="border-radius: 5px; width: 175px;" class="border border-white mb-3 p-2 d-flex flex-column justify-content-center align-items-center text-center py-2 px-1">
+                    <p class="text-white fw-bolder mb-0 fs-three">قیمت اصلی:</p>
+                    <p class="text-danger fw-bolder text-decoration-line-through mb-0 fs-three">10/000/000 تومان</p>
                   </div>
 
-                  <div style="border-radius: 5px; width: 200px;" class="border border-white p-2 d-flex flex-column justify-content-center align-items-center text-center">
-                    <p class="text-white fs-6 fw-bolder mb-0 fs-four">قیمت ویژه کاربران تحلیل:</p>
-                    <p class="text-success fs-6 fw-bolder mb-0 fs-four">2/980/000 تومان</p>
+                  <div style="border-radius: 5px; width: 275px;" class="border border-white py-2 px-0 d-flex flex-column justify-content-center align-items-center text-center">
+                    <p class="text-white fw-bolder mb-0 fs-4">قیمت ویژه کاربران تحلیل:</p>
+                    <p class="text-success fw-bolder mb-0 fs-4">2/980/000 تومان</p>
                   </div>
+
+                  <p class="text-warning text-center mt-2 fs-6">(این تخفیف فقط برای کسایی هست که آنالیز شدن)</p>
                 </div> 
                 
                 <ul style="list-style: none;" class="w-lg-75 w-100 p-0 order-lg-2 order-1 align-self-end">
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>     
                     <span>برنامه کامل زاویه فک سازی</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>رفع پف چهره</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>افزایش تقارن صورت</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>بهبود پوست و کاهش چربی</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>افزایش جذابیت چشم‌ها</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>آموزش کامل LOOKSMAXING مردان</span>
                   </li>
 
-                  <li class="text-white text-start fs-four">
-                    <img src="./assets/images/check-icon.png" width="20" height="20"/>
+                  <li class="text-white text-start fs-6">
+                    <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                     <span>به بهترین نسخه خودت تبدیل شو - همین الان!</span>
                   </li>
                 </ul>
@@ -296,9 +274,7 @@
               
             </div>
           </div>
-          <div id="course-banner-wrapper" class="order-lg-2 order-1" style="border-radius: 20px;">
-            <img id="course-banner" src="./assets/images/course-banner-lg.png" class="w-100" style="border-radius: 10px;" alt="" />
-          </div>
+          <div id="course-banner-wrapper" class="order-lg-2 order-1" style="border-radius: 20px;"></div>
                 </div>
 
 

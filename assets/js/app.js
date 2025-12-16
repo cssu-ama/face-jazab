@@ -1,3 +1,33 @@
+const siteImages = [
+  {id: "logo", classList: "h-100", name: "logo"},
+  {id: "instagram", classList: "h-100", name: "instagram"},
+  {id: "faceCorrect", classList: "icon", name: "correctIcon"},
+  {id: "faceCorrect", classList: "face", name: "faceCorrect"},
+  {id: "faceWrong", classList: "icon", name: "wrongIcon"},
+  {id: "faceWrong", classList: "face", name: "faceWrong"},
+  {id: "profileCorrect", classList: "icon", name: "correctIcon"},
+  {id: "profileCorrect", classList: "face", name: "profileCorrect"},
+  {id: "profileWrong", classList: "icon", name: "wrongIcon"},
+  {id: "profileWrong", classList: "face", name: "profileWrong"},
+  {id: "arrowIcon", classList: "", name: "arrowIcon"},
+  {id: "faceIcon", classList: "", name: "faceIcon"},
+  {id: "viewIcon", classList: "", name: "viewIcon"},
+  {id: "analyzeIcon", classList: "", name: "analyzeIcon"},
+  {id: "faceOne", classList: "face", name: "before1"},
+  {id: "faceOne", classList: "face after", name: "after1"},
+  {id: "faceTwo", classList: "face", name: "before2"},
+  {id: "faceTwo", classList: "face after", name: "after2"},
+  {id: "faceThree", classList: "face", name: "before3"},
+  {id: "faceThree", classList: "face after", name: "after3"},
+  {id: "faceFour", classList: "face", name: "before4"},
+  {id: "faceFour", classList: "face after", name: "after4"},
+  {id: "faceFive", classList: "face", name: "before5"},
+  {id: "faceFive", classList: "face after", name: "after5"},
+  {id: "courseTitle", classList: "", name: "courseTitle"},
+  {id: "check-icon", classList: "w-100", name: "checkIcon", isClass: true},
+  {id: "course-banner-wrapper", classList: "w-100 rounded", name: "courseBannerLg"},
+];
+
 const uploadBoxes = document.querySelectorAll('.uploadBox');
 const fileInputs = document.querySelectorAll('.fileInput');
 const fileNames = document.querySelectorAll('.fileName');
@@ -6,6 +36,65 @@ const progress = document.querySelector('.progress');
 const bar = document.getElementById('progressBar');
 const status = document.querySelector('#status');
 const courseBanner = document.querySelector('#course-banner');
+
+async function getSiteImages() {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/site-images/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('خطا در دریافت تصاویر');
+    }
+
+    const data = await response.json();
+
+    renderImages(data);
+
+  } catch(error) {
+    console.error(error);
+  }
+}
+
+function renderImages(images) {
+  let currentContainer = '';
+  for (const image of siteImages) {
+    if(image?.isClass) {
+      const containers = document.querySelectorAll(`.${image.id}`);
+
+      containers.forEach(node => {
+        node.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = images[image.name];
+        img.alt = image.name;
+        img.loading = 'lazy';   // بهینه‌سازی
+        img.referrerPolicy = 'no-referrer'; // امنیت
+        img.classList = image.classList;
+        node.appendChild(img);
+      });
+    } else {
+      const container = document.getElementById(image.id);
+      if (currentContainer !== image.id) {
+        container.innerHTML = '';
+        currentContainer = image.id;
+      }
+    
+      const img = document.createElement('img');
+      img.src = images[image.name];
+      img.alt = image.id;
+      img.loading = 'lazy';   // بهینه‌سازی
+      img.referrerPolicy = 'no-referrer'; // امنیت
+      img.classList = image.classList;
+
+      container.appendChild(img);
+    }
+  }
+}
+
+getSiteImages();
 
 uploadBoxes[0].addEventListener('click', function () {
   fileInputs[0].click();
