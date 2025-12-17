@@ -8,81 +8,7 @@
   <link href="../assets/bootstrap-5.3.8/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/fonts/Vazirmatn-font-face.css">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <style>
-    #page-title h2 {
-      font-family: Yekan;
-      font-weight: 900;
-    }
-
-    #page-title p {
-      color: rgba(210, 210, 210, 0.85);
-    }
-
-    #copyBtn {
-      border: none;
-      outline: none;
-      padding: 3px;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 8.5px;
-      width: 55px;
-      direction: rtl;
-      background-color: #0dcaf030;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      -webkit-backdrop-filter: blur(5px);
-      font-size: 14px;
-      color: var(--primary);
-      transition: all 0.5s ease;
-    }
-
-    #copyBtn:hover {
-      background-color: #0dcaf060;
-    }
-
-    #cardNumber {
-      color: rgba(182, 210, 232, 1);
-      font-weight: 900;
-    }
-
-    @media (max-width: 576px) {
-
-    }
-   
-    #payment-notes {
-      border: none;
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 0;
-    }
-   
-    #payment-notes * {
-      outline: none;
-      border: none;
-    }
-
-    #payment-notes .card-body {
-      border-radius: 10px;
-      background-color: rgba(5, 20, 5, 0.85);
-      outline: none;
-      border: none;
-    }
-
-    li::marker {
-      color: rgba(5, 140, 5, 1);
-      font-size: 30px;
-      margin: 0;
-    }
-
-    section .payment a {
-      background: #CE31B0;
-      background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
-      border-radius: 15px !important;
-      border: none;
-      box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
-      transition: box-shadow 0.8s ease;
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/course.css">
 </head>
 
 <body>
@@ -96,10 +22,8 @@
           |||
         </button>
 
-        <a class="order-1 order-lg-1 h-100" href="https://instagram.com/facejazaab"
-                      target="_blank">
-          <img src="../assets/images/instagram.png" alt="instagram" class="h-100">
-        </a>
+        <a id="instagram" class="order-1 order-lg-1 h-100" href="https://instagram.com/facejazaab"
+                      target="_blank"></a>
 
         <div class="offcanvas bg-dark offcanvas-end order-3 order-lg-2 h-100" tabindex="-1" id="offcanvasDarkNavbar"
           aria-labelledby="offcanvasDarkNavbarLabel">
@@ -136,9 +60,7 @@
           </div>
         </div>
 
-        <a class="order-2 order-lg-3 h-100" href="#">
-          <img src="../assets/images/logo.png" alt="logo" class="h-100">
-        </a>
+        <a id="logo" class="order-2 order-lg-3 h-100" href="../index.html"></a>
 
       </div>
     </nav>
@@ -160,9 +82,9 @@
     <div class="container">
       <div class="card payment">        
         <div class="card-body d-flex flex-column justify-content-between align-items-center">
-          <img src="../assets/images/cash-card-icon.png" width="75" height="75"/>
+          <div id="cashCardIcon" style="width: 75px; height: 75px;"></div>
           <h3 class="text-white fw-bold mt-3 mb-1 fs-two">مبلغ پرداخت:</h3>
-          <h3 class="text-success fw-bold mt-0 pb-2 fs-three" style="border-bottom: 2px dashed gray;">2/980/000 تومان</h3>
+          <h3 class="text-success fw-bold mt-0 pb-2 fs-two" style="border-bottom: 2px dashed gray;">2/980/000 تومان</h3>
           <p class="text-white fs-three">شماره کارت جهت پرداخت:</p>
           <div class="card-number-wrapper d-flex flex-row justify-content-center align-items-center gap-2">
             <span class="fs-three" id="cardNumber" data-card="5678 2222 3333 4444" aria-label="شماره کارت">
@@ -201,20 +123,18 @@
       <div class="card payment">        
         <div class="card-body d-flex flex-column justify-content-between align-items-center">
           <h3 class="text-warning mb-4 fs-two">برای فعال‌سازی دوره:</h3>
-          <h4 class="text-white text-center fw-normal fs-three">رسید پرداخت را به همراه اسم فامیلی و شماره موبایلتون در واتساپ یا تلگرام ارسال ارسال کنید (فقط یکی).</h4>
+          <h4 class="text-white text-center fw-normal fs-three lh-lg">رسید پرداخت را به همراه اسم فامیلی و شماره موبایلتون در واتساپ یا تلگرام ارسال ارسال کنید (فقط یکی).</h4>
           <div style="height: fit-content;" class="mt-3 d-flex flex-lg-row flex-column gap-3 justify-content-between align-items-center">
-          <a class="p-3 mx-auto btn text-white" style="width: 315px;" href="https://instagram.com/facejazaab"
-                      target="_blank">
-            <img src="../assets/images/instagram-icon.png" />
-            <h4 class="fs-three">ارسال رسید به پشتیبانی</h4>
-            <p class="fs-four">(اینستاگرام)</p>
+          <a class="p-3 mx-auto btn text-white" style="width: 315px;" href="https://instagram.com/facejazaab" target="_blank">
+            <div id="instagramIcon" style="height: 50px;"></div>
+            <h4 class="fs-two my-2">ارسال رسید به پشتیبانی</h4>
+            <p class="fs-three">(اینستاگرام)</p>
           </a>
 
-          <a class="p-3 mx-auto btn text-white" style="width: 315px;" href="https://t.me/facejazaab_admin"
-                      target="_blank">
-            <img src="../assets/images/telegram-icon.png" />
-            <h4 class="fs-three">ارسال رسید به پشتیبانی</h4>
-            <p class="fs-four">(تلگرام)</p>
+          <a class="p-3 mx-auto btn text-white" style="width: 315px;" href="https://t.me/facejazaab_admin" target="_blank">
+            <div id="telegramIcon" style="height: 50px;"></div>
+            <h4 class="fs-two my-2">ارسال رسید به پشتیبانی</h4>
+            <p class="fs-three">(تلگرام)</p>
           </a>
           </div>
         </div>
@@ -242,61 +162,8 @@
   </div>
 
   <script src="../assets/bootstrap-5.3.8/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/app.js"></script>
-
-  <script>
-  (function () {
-    const copyBtn = document.getElementById('copyBtn');
-    const cardEl = document.getElementById('cardNumber');
-    const statusEl = document.getElementById('copyStatus');
-    const noFileModalEl = document.getElementById('noFileModal');
-    const noFileModal = new bootstrap.Modal(noFileModalEl);
-
-    function getCardText() {
-      // اگر می‌خواهی هنگام کپی، فاصله‌ها حذف شوند:
-      return (cardEl.dataset.card || cardEl.textContent).replace(/\s+/g, '');
-      // اگر می‌خواهی فاصله‌ها حفظ شوند، از خط بالا به:
-      // return cardEl.dataset.card || cardEl.textContent;
-    }
-
-    async function copyToClipboard(text) {
-      // تلاش با API مدرن
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        try {
-          await navigator.clipboard.writeText(text);
-          return true;
-        } catch (e) {
-          // ادامه به روش قدیمی
-        }
-      }
-
-      // روش قدیمی fallback
-      try {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        ta.setSelectionRange(0, ta.value.length);
-        const ok = document.execCommand('copy');
-        document.body.removeChild(ta);
-        return ok;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    copyBtn.addEventListener('click', async () => {
-      const text = getCardText();
-      const ok = await copyToClipboard(text);
-
-      if (ok) {
-        noFileModal.show();
-      }
-    });
-  })();
-  </script>
+  <script src="../assets/js/modal.js"></script>
+  <script src="../assets/js/course.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,73 @@
+#page-title h2 {
+  font-family: Yekan;
+  font-weight: 900;
+}
+
+    #page-title p {
+      color: rgba(210, 210, 210, 0.85);
+    }
+
+    #copyBtn {
+      border: none;
+      outline: none;
+      padding: 3px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 8.5px;
+      width: 55px;
+      direction: rtl;
+      background-color: #0dcaf030;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      -webkit-backdrop-filter: blur(5px);
+      font-size: 14px;
+      color: var(--primary);
+      transition: all 0.5s ease;
+    }
+
+    #copyBtn:hover {
+      background-color: #0dcaf060;
+    }
+
+    #cardNumber {
+      color: rgba(182, 210, 232, 1);
+      font-weight: 900;
+    }
+
+    @media (max-width: 576px) {
+
+    }
+   
+    #payment-notes {
+      border: none;
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 0;
+    }
+   
+    #payment-notes * {
+      outline: none;
+      border: none;
+    }
+
+    #payment-notes .card-body {
+      border-radius: 10px;
+      background-color: rgba(5, 20, 5, 0.85);
+      outline: none;
+      border: none;
+    }
+
+    li::marker {
+      color: rgba(5, 140, 5, 1);
+      font-size: 30px;
+      margin: 0;
+    }
+
+    section .payment a {
+      background: #CE31B0;
+      background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+      border-radius: 15px !important;
+      border: none;
+      box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
+      transition: box-shadow 0.8s ease;
+    }

@@ -379,3 +379,31 @@ header {
   top: 0;
   z-index: 101 !important;
 }
+
+@keyframes breathingGlow {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+#courseTitle img {
+  width: 500px;
+  height: auto !important;
+}
+
+@media (max-width: 768px) {
+  #courseTitle img {
+    width: 100%;
+    height: auto !important;
+    align-self: center;
+  }
+}

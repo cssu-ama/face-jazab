@@ -8,36 +8,6 @@
   <link href="./assets/bootstrap-5.3.8/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./assets/fonts/Vazirmatn-font-face.css">
   <link rel="stylesheet" href="./assets/css/style.css">
-
-<style>
-@keyframes breathingGlow {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.12);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-}
-
-#courseTitle img {
-  width: 500px;
-  height: auto !important;
-}
-
-@media (max-width: 768px) {
-  #courseTitle img {
-    width: 100%;
-    height: auto !important;
-    align-self: center;
-  }
-}
-</style>
 </head>
 
 <body>
@@ -109,7 +79,7 @@
       <p class="mb-5 fs-three" style="color: rgba(210, 210, 210, 0.85);">چهره‌ات رو بررسی می‌کنم و نقاط قوت و ضعف رو دقیق بهت نشون می‌دم.</p>
 
       <div id="cardContainer" class="w-100 d-flex flex-row gap-3 justify-content-between align-items-center">
-        <div class="card input-card w-50">
+        <div class="card input-card w-lg-50 w-100">
           <div class="card-body d-flex flex-column align-items-center">
             <p class="card-title text-white d-flex justify-content-center align-items-center text-center fs-four">زاویه روبه‌رو</p>
             <div class="d-flex flex-rw gap-3 justify-content-center align-items-center">
@@ -130,7 +100,7 @@
           </div>
          </div>
 
-        <div class="card input-card w-50">
+        <div class="card input-card w-lg-50 w-100">
           <div class="card-body d-flex flex-column align-items-center">
             <p class="card-title text-white d-flex justify-content-center align-items-center text-center fs-four">زاویه نیم رخ</p>
             <div class="d-flex flex-row gap-3 justify-content-center align-items-center">
@@ -275,10 +245,11 @@
             </div>
           </div>
           <div id="course-banner-wrapper" class="order-lg-2 order-1" style="border-radius: 20px;"></div>
-                </div>
+          
+          </div>
 
 
-          <a href="./pages/course.html" target="_blank" class="py-4 btn mt-5 mb-2 text-white fs-two" style="width: 300px; direction: rtl;">می‌خوام جذاب شم!</a>
+          <a href="./pages/course.html" target="_blank" class="py-4 btn mt-5 mb-2 text-white fs-two w-100" style="max-width: 400px; direction: rtl;">می‌خوام جذاب شم!</a>
           <p class="fs-four" style="color: rgba(210, 210, 210, 0.85);">(دسترسی فوری، بدون نیاز به مشاوره)</p>
         </div>
       </div>
@@ -294,89 +265,7 @@
   <script src="./assets/bootstrap-5.3.8/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/js/app.js"></script>
   <script src="./assets/js/circle.js"></script>
-
-<script>
-(() => {
-  const glowLayer = document.createElement("div");
-  glowLayer.style.position = "fixed";
-  glowLayer.style.inset = "0";
-  glowLayer.style.pointerEvents = "none";
-  glowLayer.style.zIndex = "0";
-  glowLayer.style.width = "100%";  
-
-  document.documentElement.appendChild(glowLayer);
-
-  const count = Math.floor(Math.random() * 6) + 5; // 14 تا 30
-
-  // 🎨 Weighted colors (pink dominant)
-  const colors = [
-    [255, 90, 170], // pink (x3)
-    [255, 90, 170],
-    [255, 90, 170],
-    [120, 170, 255], // blue
-    [120, 170, 255],
-    [120, 170, 255],
-    [120, 170, 255],
-    [139, 92, 246],
-    [255, 85, 165],    // very light red (rare)
-    [109, 40, 217]
-  ];
-
-  const cols = Math.ceil(Math.sqrt(count));
-  const rows = Math.ceil(count / cols);
-
-  let index = 0;
-
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (index >= count) return;
-
-      const glow = document.createElement("span");
-
-      // ⬆️ بزرگ‌تر = پخش نرم‌تر
-      const size = Math.random() * 280 + 220;
-
-      const cellW = 100 / cols;
-      const cellH = 100 / rows;
-
-      const x = col * cellW + Math.random() * cellW;
-      const y = row * cellH + Math.random() * cellH;
-
-      const [r, g, b] = colors[Math.floor(Math.random() * colors.length)];
-
-      glow.style.position = "absolute";
-      glow.style.width = size + "px";
-      glow.style.height = size + "px";
-      glow.style.left = x + "%";
-      glow.style.top = y + "%";
-      glow.style.borderRadius = "50%";
-
-      /* 🌫 Ultra-diffused inner glow */
-      glow.style.background = `
-        radial-gradient(
-          circle at center,
-          rgba(${r},${g},${b},0.35) 0%,
-          rgba(${r},${g},${b},0.28) 18%,
-          rgba(${r},${g},${b},0.18) 38%,
-          rgba(${r},${g},${b},0.10) 58%,
-          rgba(${r},${g},${b},0.04) 72%,
-          rgba(${r},${g},${b},0.0) 85%
-        )
-      `;
-
-      /* 🫁 Breathing – خیلی نرم */
-      glow.style.animation = `breathingGlow ${Math.random() * 10 + 14}s ease-in-out infinite`;
-      glow.style.animationDelay = `${Math.random() * 8}s`;
-
-      glowLayer.appendChild(glow);
-      index++;
-    }
-  }
-})();
-</script>
-
-
+  <script src="./assets/js/bubble.js"></script>
 
 </body>
-
 </html>
