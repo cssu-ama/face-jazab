@@ -120,11 +120,10 @@ const noFileModalEl = document.getElementById('noFileModal');
 const noFileModal = new bootstrap.Modal(noFileModalEl);
 
 btn.addEventListener('click', async () => {
-  const files = [];
-  files.push(fileInputs[0].files);
-  files.push(fileInputs[1].files);
+  const frontFile = fileInputs[0].files[0];
+  const sideFile = fileInputs[1].files[0];
 
-  if (files[0].length === 0 || files[0].length === 0) {
+  if (!frontFile || !sideFile) {
     noFileModal.show();
     return;
   }
@@ -138,28 +137,29 @@ btn.addEventListener('click', async () => {
   fakeProgress(1000 + Math.random() * 2000); // بین 1 تا 3 ثانیه
 
   const faceData = new FormData();
-  for (let i = 0; i < files.length; i++) faceData.append('files', files[i]);
+  faceData.append('front_image', frontFile);
+  faceData.append('side_image', sideFile);
 
-  /*try {
-    const res = await fetch('https://your-api.example.com/api/uploads', {
+  try {
+    const res = await fetch('http://127.0.0.1:8000/api/face-analysis/', {
       method: 'POST',
-      body: fd,
-      // headers: { }  -- !!! نذار Content-Type اینجا
+      body: faceData
     });
-    const json = await res.json();
+    
     if (res.ok) {
       setProgress(100);
       status.textContent = 'ارسال شد';
     } else {
       status.textContent = 'خطا در ارسال';
     }
+    const json = await res.json();
   } catch (err) {
     status.textContent = 'اینترنت شما مشکل دارد';
   } finally {
     setTimeout(() => btn.classList.remove('fade-shadow'), 400);
     setTimeout(() => progress.classList.add('visually-hidden'), 400);
     setTimeout(() => status.classList.add('visually-hidden'), 400);
-  }*/
+  }
 });
 
 function fakeProgress(duration) {
@@ -183,17 +183,3 @@ function setProgress(value) {
   bar.style.width = value + '%';
   bar.textContent = value + '%';
 }
-
-/**function updateImage() {
-  const width = window.innerWidth;
-
-  if (width < 992) {
-    courseBanner.src = "./assets/images/course-banner.jpg";
-  } else {
-    courseBanner.src = "./assets/images/course-banner-lg.png";
-  }
-}
-
-updateImage();
-
-window.addEventListener("resize", updateImage);*/
