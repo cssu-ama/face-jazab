@@ -37,179 +37,272 @@ const btn = document.querySelector('#analyzeBtn');
 const progress = document.querySelector('.progress');
 const bar = document.getElementById('progressBar');
 const status = document.querySelector('#status');
+const courseBanner = document.querySelector('#course-banner');
 const analyzeResult = document.querySelector('#analyzeResult');
 const analyzeProgress = document.querySelector('#analyzeProgress');
 
-const STORAGE_ANALYSIS = 'analysis_state';
-const STORAGE_CHECKED = 'checked_state';
-const INTERVAL = 1 * 10 * 1000; // 2 دقیقه
-let sliderInterval;
-let imageList = [];
-let apiImages = {};
-
-// =======================
-// Fetch and render images
-// =======================
 async function getSiteImages() {
   try {
-    const res = await fetch('http://127.0.0.1:8000/api/site-images/');
-    if (!res.ok) throw new Error('خطا در دریافت تصاویر');
+    const response = await fetch('http://127.0.0.1:8000/api/site-images/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
 
-    apiImages = await res.json();
-    renderBaseImages(apiImages);
-    renderCheckedImages(apiImages);
-  } catch (e) {
-    console.error(e);
+    if (!response.ok) {
+      throw new Error('خطا در دریافت تصاویر');
+    }
+
+    const data = await response.json();
+
+    renderBaseImages(data);
+    renderCheckedImages(data);  // overrid
+  } catch(error) {
+    console.error(error);
   }
 }
 
-function renderBaseImages(images) {
+function renderBaseImages(images) {  
   let currentContainer = '';
   for (const image of siteImages) {
-    if (image.isClass) {
-      const nodes = document.querySelectorAll(`.${image.id}`);
-      nodes.forEach(node => {
+    if(image?.isClass) {
+      const containers = document.querySelectorAll(`.${image.id}`);
+
+      containers.forEach(node => {
         node.innerHTML = '';
         const img = document.createElement('img');
         img.src = images[image.name];
         img.alt = image.name;
-        img.className = image.classList;
-        img.loading = 'lazy';
+        img.loading = 'lazy';   // بهینه‌سازی
+        img.referrerPolicy = 'no-referrer'; // امنیت
+        img.classList = image.classList;
         node.appendChild(img);
       });
     } else {
       const container = document.getElementById(image.id);
-      if (currentContainer !== image.id) container.innerHTML = '';
-      currentContainer = image.id;
-
+      if (currentContainer !== image.id) {
+        container.innerHTML = '';
+        currentContainer = image.id;
+      }
+    
       const img = document.createElement('img');
       img.src = images[image.name];
       img.alt = image.id;
-      img.className = image.classList;
-      img.loading = 'lazy';
+      img.loading = 'lazy';   // بهینه‌سازی
+      img.referrerPolicy = 'no-referrer'; // امنیت
+      img.classList = image.classList;
+
       container.appendChild(img);
     }
   }
 }
 
 function renderCheckedImages(images) {
-  const state = getCheckedState();
+  const state = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('checked_state')) || {};
+    } catch {
+      return {};
+    }
+  })();
+
   const imgEls = document.querySelectorAll('.checked');
 
-  imgEls.forEach((img, i) => {
-    img.src = state[i] || images.unCheckedIcon;
+  imgEls.forEach((img, index) => {
+    if (state[index]) {
+      img.src = state[index]; // 👈 از لوکال
+    } else {
+      img.src = images.unCheckedIcon; // 👈 از API
+    }
   });
 }
 
-function getCheckedState() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_CHECKED)) || {};
-  } catch {
-    localStorage.removeItem(STORAGE_CHECKED);
-    return {};
-  }
-}
+getSiteImages();
 
-function saveCheckedState(index, src) {
-  const state = getCheckedState();
-  state[index] = src;
-  localStorage.setItem(STORAGE_CHECKED, JSON.stringify(state));
-}
-
-// ======================
-// Upload Box Events
-// ======================
-uploadBoxes.forEach((box, i) => box.addEventListener('click', () => fileInputs[i].click()));
-fileInputs.forEach((input, i) => {
-  input.addEventListener('change', () => {
-    if (input.files.length > 0) fileNames[i].textContent = input.files[0].name;
-  });
+uploadBoxes[0].addEventListener('click', function () {
+  fileInputs[0].click();
 });
 
-// ======================
-// Main analysis flow
-// ======================
+uploadBoxes[1].addEventListener('click', function () {
+  fileInputs[1].click();
+});
+
+fileInputs[0].addEventListener('change', function () {
+  if (this.files.length > 0) {
+    fileNames[0].textContent = this.files[0].name;
+  }
+});
+
+fileInputs[1].addEventListener('change', function () {
+  if (this.files.length > 0) {
+    fileNames[1].textContent = this.files[0].name;
+  }
+});
+
+const noFileModalEl = document.getElementById('noFileModal');
+const noFileModal = new bootstrap.Modal(noFileModalEl);
+
 btn.addEventListener('click', async () => {
+  const res = await fetch('http://127.0.0.1:8000/api/site-images/');
+  const images = await res.json();
+
+  resetAll(images);
+
   const frontFile = fileInputs[0].files[0];
   const sideFile = fileInputs[1].files[0];
 
   if (!frontFile || !sideFile) {
-    const noFileModal = new bootstrap.Modal(document.getElementById('noFileModal'));
     noFileModal.show();
     return;
   }
 
-  resetAnalysis();
-  startAnalysis();
-
-  await runAnalysis(frontFile, sideFile);
-});
-
-function resetAnalysis() {
-  clearInterval(sliderInterval);
-  localStorage.removeItem(STORAGE_ANALYSIS);
-  localStorage.removeItem(STORAGE_CHECKED);
-  renderCheckedImages(apiImages);
-
-  setProgress(0);
-  progress.classList.add('visually-hidden');
-  status.classList.add('visually-hidden');
-  status.textContent = '';
-  analyzeResult.classList.add('visually-hidden');
-  analyzeProgress.classList.add('visually-hidden');
-  btn.classList.remove('fade-shadow');
-}
-
-function startAnalysis() {
-  const state = {
-    started: true,
-    startedAt: Date.now()
-  };
-  localStorage.setItem(STORAGE_ANALYSIS, JSON.stringify(state));
-}
-
-// ======================
-// Analysis process
-// ======================
-async function runAnalysis(frontFile, sideFile) {
   progress.classList.remove("visually-hidden");
   status.classList.remove("visually-hidden");
   status.textContent = 'در حال آپلود...';
+      
   btn.classList.add('fade-shadow');
 
-  fakeProgress(1000 + Math.random() * 2000);
+  fakeProgress(1000 + Math.random() * 2000); // بین 1 تا 3 ثانیه
 
-  const formData = new FormData();
-  formData.append('front_image', frontFile);
-  formData.append('side_image', sideFile);
+  const faceData = new FormData();
+  faceData.append('front_image', frontFile);
+  faceData.append('side_image', sideFile);
 
   try {
     const res = await fetch('http://127.0.0.1:8000/api/face-analysis/', {
       method: 'POST',
-      body: formData
+      body: faceData
     });
-    if (res.ok) status.textContent = 'ارسال شد';
-    else status.textContent = 'خطا در ارسال';
-    await res.json();
-  } catch {
+    
+    if (res.ok) {
+      setProgress(100);
+      status.textContent = 'ارسال شد';
+    } else {
+      status.textContent = 'خطا در ارسال';
+    }
+    const json = await res.json();
+  } catch (err) {
     status.textContent = 'اینترنت شما مشکل دارد';
+  } finally {
+    setTimeout(() => btn.classList.remove('fade-shadow'), 1100);
+    setTimeout(() => progress.classList.add('visually-hidden'), 1500);
+    setTimeout(() => status.classList.add('visually-hidden'), 1900);
+    setTimeout(() => analyzeResult.classList.remove('visually-hidden'), 2300);
+    setTimeout(() => analyzeProgress.classList.remove('visually-hidden'), 2700);
+
+    async function fetchImages() {
+      const res = await fetch('http://127.0.0.1:8000/api/site-images/');
+      const data = await res.json();
+      image = data.checkedIcon;
+    }
+
+    const STORAGE_INDEX = 'slider_index';
+    const STORAGE_TIME = 'slider_last_time';
+    const INTERVAL = 1 * 30 * 1000; // 2 دقیقه
+    let index = 0;
+    const imagesLength = 5;
+
+    function getCurrentIndex() {
+      const savedIndex = parseInt(localStorage.getItem(STORAGE_INDEX)) || 0;
+      const lastTime = parseInt(localStorage.getItem(STORAGE_TIME)) || Date.now();
+
+      const elapsed = Date.now() - lastTime;
+      const steps = Math.floor(elapsed / INTERVAL);
+
+      let newIndex = savedIndex + steps;
+      if (newIndex >= imagesLength) {
+        newIndex = imagesLength - 1;
+      }
+
+      return newIndex;
+    }
+
+    const imgEls = document.querySelectorAll('.checked');
+
+    function showImage(index) {
+      console.log(imgEls);
+      console.log(index);
+      console.log(image);
+      imgEls[index].src = image;
+      localStorage.setItem(STORAGE_INDEX, index);
+      localStorage.setItem(STORAGE_TIME, Date.now());
+      saveCheckedState(index, image)
+    }
+
+    function startSlider(startIndex) {
+      let currentIndex = startIndex;
+      showImage(currentIndex);
+
+      const interval = setInterval(() => {
+        currentIndex++;
+
+        if (currentIndex >= imagesLength) {
+          clearInterval(interval);
+          return;
+        }
+
+        showImage(currentIndex);
+
+      }, INTERVAL);
+    }
+
+    async function init() {
+      await fetchImages();
+
+      restoreCheckedImages(); // 👈 اول وضعیت قبلی
+
+      const index = getCurrentIndex();
+      startSlider(index);
+    }
+
+    init();
+
+    function saveCheckedState(index, src) {
+      const state = getCheckedState();
+      state[index] = src;
+      localStorage.setItem('checked_state', JSON.stringify(state));
+    }
+
+    function restoreCheckedImages() {
+      const state = getCheckedState();
+      if (!state) return;
+
+      Object.keys(state).forEach(index => {
+        if (imgEls[index]) {
+          imgEls[index].src = state[index];
+        }
+      });
+    }
+
+    /*const img = document.createElement('img');
+    img.src = URL.createObjectURL(frontFile);
+    img.alt = 'Front face preview';
+    img.style.border = '4px solid green';
+    img.style.borderRadius = '50%';
+    img.style.width = '100%';
+    img.style.height = '100%';
+
+    const container = document.getElementById('resultFace');
+    container.innerHTML = '';
+    container.appendChild(img);*/
   }
+});
 
-  // شروع اسلایدر تصاویر
-  initSlider();
-}
-
-// ======================
-// Progress bar
-// ======================
 function fakeProgress(duration) {
   const start = Date.now();
+
   function step() {
     const elapsed = Date.now() - start;
     const pct = Math.min(100, Math.floor((elapsed / duration) * 100));
+
     setProgress(pct);
-    if (pct < 100) requestAnimationFrame(step);
+
+    if (pct < 100) {
+      requestAnimationFrame(step);
+    }
   }
+
   step();
 }
 
@@ -218,46 +311,32 @@ function setProgress(value) {
   bar.textContent = value + '%';
 }
 
-// ======================
-// Slider logic
-// ======================
-function initSlider() {
-  const imgEls = document.querySelectorAll('.checked');
-  if (!imgEls.length) return;
 
-  // ادامه از state اگر refresh شد
-  const state = JSON.parse(localStorage.getItem(STORAGE_ANALYSIS)) || {startedAt: Date.now()};
-  const elapsed = Date.now() - state.startedAt;
-  const startIndex = Math.floor(elapsed / INTERVAL);
-  let currentIndex = startIndex;
+function resetAll(imagesFromApi) {
+  localStorage.removeItem('slider_index');
+  localStorage.removeItem('slider_last_time');
+  localStorage.removeItem('checked_state'); // 👈 خیلی مهم
 
-  const checkedIcon = apiImages.checkedIcon;
+  document.querySelectorAll('.checked').forEach(img => {
+    img.src = imagesFromApi.unCheckedIcon;
+  });
 
-  function showImage(idx) {
-    if (!imgEls[idx]) return;
-    imgEls[idx].src = checkedIcon;
-    saveCheckedState(idx, checkedIcon);
-  }
-
-  // نمایش تصویر شروع
-  showImage(currentIndex);
-
-  sliderInterval = setInterval(() => {
-    currentIndex++;
-    if (currentIndex >= imgEls.length) {
-      clearInterval(sliderInterval);
-      return;
-    }
-    showImage(currentIndex);
-  }, INTERVAL);
+  setProgress(0);
+  progress.classList.add('visually-hidden');
+  status.classList.add('visually-hidden');
+  analyzeResult.classList.add('visually-hidden');
+  analyzeProgress.classList.add('visually-hidden');
+  btn.classList.remove('fade-shadow');
 }
 
-// ======================
-// Auto resume on page load
-// ======================
-window.addEventListener('DOMContentLoaded', () => {
-  getSiteImages().then(() => {
-    const state = JSON.parse(localStorage.getItem(STORAGE_ANALYSIS));
-    if (state?.started) initSlider();
-  });
-});
+function getCheckedState() {
+  try {
+    const raw = localStorage.getItem('checked_state');
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('checked_state خراب بود، ریست شد');
+    localStorage.removeItem('checked_state');
+    return {};
+  }
+}
