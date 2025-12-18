@@ -26,6 +26,8 @@ const siteImages = [
   {id: "courseTitle", classList: "", name: "courseTitle"},
   {id: "check-icon", classList: "w-100", name: "checkIcon", isClass: true},
   {id: "course-banner-wrapper", classList: "w-100 rounded", name: "courseBannerLg"},
+  {id: "finishIcon", classList: "h-100", name: "finishIcon"},
+  {id: "unCheckedIcon", classList: "w-100 h-100 checked", name: "unCheckedIcon", isClass: true}
 ];
 
 const uploadBoxes = document.querySelectorAll('.uploadBox');
@@ -36,6 +38,8 @@ const progress = document.querySelector('.progress');
 const bar = document.getElementById('progressBar');
 const status = document.querySelector('#status');
 const courseBanner = document.querySelector('#course-banner');
+const analyzeResult = document.querySelector('#analyzeResult');
+const analyzeProgress = document.querySelector('#analyzeProgress');
 
 async function getSiteImages() {
   try {
@@ -52,14 +56,14 @@ async function getSiteImages() {
 
     const data = await response.json();
 
-    renderImages(data);
-
+    renderBaseImages(data);
+    renderCheckedImages(data);  // overrid
   } catch(error) {
     console.error(error);
   }
 }
 
-function renderImages(images) {
+function renderBaseImages(images) {  
   let currentContainer = '';
   for (const image of siteImages) {
     if(image?.isClass) {
@@ -94,6 +98,20 @@ function renderImages(images) {
   }
 }
 
+function renderCheckedImages(images) {
+  const state = JSON.parse(localStorage.getItem('checked_state')) || {};
+
+  const imgEls = document.querySelectorAll('.checked');
+
+  imgEls.forEach((img, index) => {
+    if (state[index]) {
+      img.src = state[index]; // 👈 از لوکال
+    } else {
+      img.src = images.unCheckedIcon; // 👈 از API
+    }
+  });
+}
+
 getSiteImages();
 
 uploadBoxes[0].addEventListener('click', function () {
@@ -120,6 +138,11 @@ const noFileModalEl = document.getElementById('noFileModal');
 const noFileModal = new bootstrap.Modal(noFileModalEl);
 
 btn.addEventListener('click', async () => {
+  const res = await fetch('http://127.0.0.1:8000/api/site-images/');
+  const images = await res.json();
+
+  resetAll(images);
+
   const frontFile = fileInputs[0].files[0];
   const sideFile = fileInputs[1].files[0];
 
@@ -156,9 +179,107 @@ btn.addEventListener('click', async () => {
   } catch (err) {
     status.textContent = 'اینترنت شما مشکل دارد';
   } finally {
-    setTimeout(() => btn.classList.remove('fade-shadow'), 400);
-    setTimeout(() => progress.classList.add('visually-hidden'), 400);
-    setTimeout(() => status.classList.add('visually-hidden'), 400);
+    setTimeout(() => btn.classList.remove('fade-shadow'), 1100);
+    setTimeout(() => progress.classList.add('visually-hidden'), 1500);
+    setTimeout(() => status.classList.add('visually-hidden'), 1900);
+    setTimeout(() => analyzeResult.classList.remove('visually-hidden'), 2300);
+    setTimeout(() => analyzeProgress.classList.remove('visually-hidden'), 2700);
+
+    async function fetchImages() {
+      const res = await fetch('http://127.0.0.1:8000/api/site-images/');
+      const data = await res.json();
+      image = data.checkedIcon;
+    }
+
+    const STORAGE_INDEX = 'slider_index';
+    const STORAGE_TIME = 'slider_last_time';
+    const INTERVAL = 1 * 30 * 1000; // 2 دقیقه
+    let index = 0;
+    const imagesLength = 5;
+
+    function getCurrentIndex() {
+      const savedIndex = parseInt(localStorage.getItem(STORAGE_INDEX)) || 0;
+      const lastTime = parseInt(localStorage.getItem(STORAGE_TIME)) || Date.now();
+
+      const elapsed = Date.now() - lastTime;
+      const steps = Math.floor(elapsed / INTERVAL);
+
+      let newIndex = savedIndex + steps;
+      if (newIndex >= imagesLength) {
+        newIndex = imagesLength - 1;
+      }
+
+      return newIndex;
+    }
+
+    const imgEls = document.querySelectorAll('.checked');
+
+    function showImage(index) {
+      console.log(imgEls);
+      console.log(index);
+      console.log(image);
+      imgEls[index].src = image;
+      localStorage.setItem(STORAGE_INDEX, index);
+      localStorage.setItem(STORAGE_TIME, Date.now());
+      saveCheckedState(index, image)
+    }
+
+    function startSlider(startIndex) {
+      let currentIndex = startIndex;
+      showImage(currentIndex);
+
+      const interval = setInterval(() => {
+        currentIndex++;
+
+        if (currentIndex >= imagesLength) {
+          clearInterval(interval);
+          return;
+        }
+
+        showImage(currentIndex);
+
+      }, INTERVAL);
+    }
+
+    async function init() {
+      await fetchImages();
+
+      restoreCheckedImages(); // 👈 اول وضعیت قبلی
+
+      const index = getCurrentIndex();
+      startSlider(index);
+    }
+
+    init();
+
+    function saveCheckedState(index, src) {
+      const state = JSON.parse(localStorage.getItem('checked_state')) || {};
+      state[index] = src;
+      localStorage.setItem('checked_state', JSON.stringify(state));
+    }
+
+    function restoreCheckedImages() {
+      const state = JSON.parse(localStorage.getItem('checked_state'));
+      if (!state) return;
+
+      Object.keys(state).forEach(index => {
+        if (imgEls[index]) {
+          imgEls[index].src = state[index];
+        }
+      });
+    }
+
+    /*const img = document.createElement('img');
+    img.src = URL.createObjectURL(frontFile);
+    img.alt = 'Front face preview';
+    img.style.border = '4px solid green';
+    img.style.borderRadius = '50%';
+    img.style.width = '100%';
+    img.style.height = '100%';
+
+    const container = document.getElementById('resultFace');
+    container.innerHTML = '';
+    container.appendChild(img);*/
   }
 });
 
@@ -183,3 +304,28 @@ function setProgress(value) {
   bar.style.width = value + '%';
   bar.textContent = value + '%';
 }
+
+
+function resetAll(imagesFromApi) {
+  // 1️⃣ پاک کردن state اسلایدر
+  localStorage.removeItem('slider_index');
+  localStorage.removeItem('slider_last_time');
+
+  // 3️⃣ ریست UI
+  setProgress(0);
+  progress.classList.add('visually-hidden');
+  status.classList.add('visually-hidden');
+  status.textContent = '';
+
+  analyzeResult.classList.add('visually-hidden');
+  analyzeProgress.classList.add('visually-hidden');
+
+  // 4️⃣ ریست تصاویر checked
+  document.querySelectorAll('.checked').forEach(img => {
+    img.src = imagesFromApi.unCheckedIcon; // 👈 برگشت به حالت اولیه
+  });
+
+  // 5️⃣ ریست افکت دکمه
+  btn.classList.remove('fade-shadow');
+}
+
