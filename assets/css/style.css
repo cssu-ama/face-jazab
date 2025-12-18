@@ -255,9 +255,6 @@ section {
   background-color: rgba(220, 53, 69, 0.3);
 }
 
-
-/**  background-color: rgba(13, 27, 42, 0.3);  **/
-
 #analyzeResult .card.success {
   background-color: rgba(25, 135, 84, 0.3);
 }
