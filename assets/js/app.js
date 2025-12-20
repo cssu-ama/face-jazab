@@ -1,3 +1,5 @@
+
+
 const siteImages = [
   {id: "logo", classList: "h-100", name: "logo"},
   {id: "instagram", classList: "h-100", name: "instagram"},
@@ -41,6 +43,14 @@ const courseBanner = document.querySelector('#course-banner');
 const analyzeResult = document.querySelector('#analyzeResult');
 const analyzeProgress = document.querySelector('#analyzeProgress');
 
+const STORAGE_INDEX = 'slider_index';
+const STORAGE_TIME = 'slider_last_time';
+const INTERVAL = 1 * 30 * 1000; // 2 دقیقه
+
+const imagesLength = 5;
+
+const props = {};
+
 async function getSiteImages() {
   try {
     const response = await fetch('http://127.0.0.1:8000/api/site-images/', {
@@ -54,7 +64,9 @@ async function getSiteImages() {
       throw new Error('خطا در دریافت تصاویر');
     }
 
-    const data = await response.json();
+    props["data"] = await response.json();
+    
+    const {data} = props;
 
     renderBaseImages(data);
     renderCheckedImages(data);  // overrid
@@ -99,13 +111,7 @@ function renderBaseImages(images) {
 }
 
 function renderCheckedImages(images) {
-  const state = (() => {
-    try {
-      return JSON.parse(localStorage.getItem('checked_state')) || {};
-    } catch {
-      return {};
-    }
-  })();
+  const state = getCheckedState();
 
   const imgEls = document.querySelectorAll('.checked');
 
@@ -143,19 +149,39 @@ fileInputs[1].addEventListener('change', function () {
 const noFileModalEl = document.getElementById('noFileModal');
 const noFileModal = new bootstrap.Modal(noFileModalEl);
 
-btn.addEventListener('click', async () => {
-  const res = await fetch('http://127.0.0.1:8000/api/site-images/');
-  const images = await res.json();
+document.addEventListener('DOMContentLoaded', () => {
+  if (isInProgress()) {
+    console.log('ادامه فرآیند قبلی...');
+    init(); // همون init اسلایدر که خودت نوشتی
+  } else {
+    console.log('ریستارت');
+    resetAll();
+  }
+});
 
-  resetAll(images);
+function isInProgress() {
+  try {
+    return JSON.parse(localStorage.getItem('inprogress')) === true;
+  } catch {
+    return false;
+  }
+}
+
+
+btn.addEventListener('click', async () => {
+  
+  resetAll();
 
   const frontFile = fileInputs[0].files[0];
   const sideFile = fileInputs[1].files[0];
 
   if (!frontFile || !sideFile) {
     noFileModal.show();
+    localStorage.setItem('inprogress', JSON.stringify(false));
     return;
   }
+
+  localStorage.setItem('inprogress', JSON.stringify(true));  
 
   progress.classList.remove("visually-hidden");
   status.classList.remove("visually-hidden");
@@ -181,7 +207,7 @@ btn.addEventListener('click', async () => {
     } else {
       status.textContent = 'خطا در ارسال';
     }
-    const json = await res.json();
+    const data = await res.json();
   } catch (err) {
     status.textContent = 'اینترنت شما مشکل دارد';
   } finally {
@@ -191,103 +217,28 @@ btn.addEventListener('click', async () => {
     setTimeout(() => analyzeResult.classList.remove('visually-hidden'), 2300);
     setTimeout(() => analyzeProgress.classList.remove('visually-hidden'), 2700);
 
-    async function fetchImages() {
-      const res = await fetch('http://127.0.0.1:8000/api/site-images/');
-      const data = await res.json();
-      image = data.checkedIcon;
-    }
-
-    const STORAGE_INDEX = 'slider_index';
-    const STORAGE_TIME = 'slider_last_time';
-    const INTERVAL = 1 * 30 * 1000; // 2 دقیقه
-    let index = 0;
-    const imagesLength = 5;
-
-    function getCurrentIndex() {
-      const savedIndex = parseInt(localStorage.getItem(STORAGE_INDEX)) || 0;
-      const lastTime = parseInt(localStorage.getItem(STORAGE_TIME)) || Date.now();
-
-      const elapsed = Date.now() - lastTime;
-      const steps = Math.floor(elapsed / INTERVAL);
-
-      let newIndex = savedIndex + steps;
-      if (newIndex >= imagesLength) {
-        newIndex = imagesLength - 1;
-      }
-
-      return newIndex;
-    }
-
-    const imgEls = document.querySelectorAll('.checked');
-
-    function showImage(index) {
-      console.log(imgEls);
-      console.log(index);
-      console.log(image);
-      imgEls[index].src = image;
-      localStorage.setItem(STORAGE_INDEX, index);
-      localStorage.setItem(STORAGE_TIME, Date.now());
-      saveCheckedState(index, image)
-    }
-
-    function startSlider(startIndex) {
-      let currentIndex = startIndex;
-      showImage(currentIndex);
-
-      const interval = setInterval(() => {
-        currentIndex++;
-
-        if (currentIndex >= imagesLength) {
-          clearInterval(interval);
-          return;
-        }
-
-        showImage(currentIndex);
-
-      }, INTERVAL);
-    }
-
-    async function init() {
-      await fetchImages();
-
-      restoreCheckedImages(); // 👈 اول وضعیت قبلی
-
-      const index = getCurrentIndex();
-      startSlider(index);
-    }
-
     init();
-
-    function saveCheckedState(index, src) {
-      const state = getCheckedState();
-      state[index] = src;
-      localStorage.setItem('checked_state', JSON.stringify(state));
-    }
-
-    function restoreCheckedImages() {
-      const state = getCheckedState();
-      if (!state) return;
-
-      Object.keys(state).forEach(index => {
-        if (imgEls[index]) {
-          imgEls[index].src = state[index];
-        }
-      });
-    }
-
-    /*const img = document.createElement('img');
-    img.src = URL.createObjectURL(frontFile);
-    img.alt = 'Front face preview';
-    img.style.border = '4px solid green';
-    img.style.borderRadius = '50%';
-    img.style.width = '100%';
-    img.style.height = '100%';
-
-    const container = document.getElementById('resultFace');
-    container.innerHTML = '';
-    container.appendChild(img);*/
   }
 });
+
+function resetAll() {
+  localStorage.removeItem('slider_index');
+  localStorage.removeItem('slider_last_time');
+  localStorage.removeItem('checked_state');
+  localStorage.removeItem('inprogress');
+
+  const {unCheckedIcon} = props["data"] ?? '';
+  document.querySelectorAll('.checked').forEach(img => {
+    img.src = unCheckedIcon;
+  });
+
+  setProgress(0);
+  progress.classList.add('visually-hidden');
+  status.classList.add('visually-hidden');
+  analyzeResult.classList.add('visually-hidden');
+  analyzeProgress.classList.add('visually-hidden');
+  btn.classList.remove('fade-shadow');
+}
 
 function fakeProgress(duration) {
   const start = Date.now();
@@ -311,22 +262,31 @@ function setProgress(value) {
   bar.textContent = value + '%';
 }
 
+async function getImage() {
+  const res = await fetch('http://127.0.0.1:8000/api/site-images/');
+  const data = await res.json();
+  const image = data.checkedIcon;
+  return image;
+}
 
-function resetAll(imagesFromApi) {
-  localStorage.removeItem('slider_index');
-  localStorage.removeItem('slider_last_time');
-  localStorage.removeItem('checked_state'); // 👈 خیلی مهم
+async function init() {
+  restoreCheckedImages(); // 👈 اول وضعیت قبلی
 
-  document.querySelectorAll('.checked').forEach(img => {
-    img.src = imagesFromApi.unCheckedIcon;
+  const index = getCurrentIndex();
+  await startSlider(index);
+}
+
+function restoreCheckedImages() {
+  const state = getCheckedState();
+  if (!state) return;
+
+  const imgEls = document.querySelectorAll('.checked');
+
+  Object.keys(state).forEach(index => {
+    if (imgEls[index]) {
+      imgEls[index].src = state[index];
+    }
   });
-
-  setProgress(0);
-  progress.classList.add('visually-hidden');
-  status.classList.add('visually-hidden');
-  analyzeResult.classList.add('visually-hidden');
-  analyzeProgress.classList.add('visually-hidden');
-  btn.classList.remove('fade-shadow');
 }
 
 function getCheckedState() {
@@ -340,3 +300,54 @@ function getCheckedState() {
     return {};
   }
 }
+
+function getCurrentIndex() {
+  const savedIndex = parseInt(localStorage.getItem(STORAGE_INDEX)) || 0;
+  const lastTime = parseInt(localStorage.getItem(STORAGE_TIME)) || Date.now();
+
+  const elapsed = Date.now() - lastTime;
+  const steps = Math.floor(elapsed / INTERVAL);
+
+  let newIndex = savedIndex + steps;
+  if (newIndex >= imagesLength) {
+    newIndex = imagesLength - 1;
+    state.inProgress = true;
+  }
+
+  return newIndex;
+}
+
+async function startSlider(startIndex) {
+  let currentIndex = startIndex;
+  await showImage(currentIndex);
+
+  const interval = setInterval(async () => {
+    currentIndex++;
+
+    if (currentIndex >= imagesLength) {
+      clearInterval(interval);
+      localStorage.setItem('inprogress', JSON.stringify(false));
+      
+      return;
+    }
+
+    await showImage(currentIndex);
+
+  }, INTERVAL);
+}
+
+async function showImage(index) {
+  const image = await getImage();
+  const imgEls = document.querySelectorAll('.checked');
+  imgEls[index].src = image;
+  localStorage.setItem(STORAGE_INDEX, index);
+  localStorage.setItem(STORAGE_TIME, Date.now());
+  saveCheckedState(index, image)
+}
+
+function saveCheckedState(index, src) {
+  const state = getCheckedState();
+  state[index] = src;
+  localStorage.setItem('checked_state', JSON.stringify(state));
+}
+
