@@ -42,10 +42,14 @@ const status = document.querySelector('#status');
 const courseBanner = document.querySelector('#course-banner');
 const analyzeResult = document.querySelector('#analyzeResult');
 const analyzeProgress = document.querySelector('#analyzeProgress');
+const resultFace = document.querySelector('#resultFace');
+const congras = document.querySelector('#congras');
+const resultDetail = document.querySelector('#resultDetail');
+const resultScore = document.querySelector('#resultScore');
 
 const STORAGE_INDEX = 'slider_index';
 const STORAGE_TIME = 'slider_last_time';
-const INTERVAL = 1 * 30 * 1000; // 2 دقیقه
+const INTERVAL = 1 * 5 * 1000; // 2 دقیقه
 
 const imagesLength = 5;
 
@@ -152,6 +156,13 @@ const noFileModal = new bootstrap.Modal(noFileModalEl);
 document.addEventListener('DOMContentLoaded', () => {
   if (isInProgress()) {
     console.log('ادامه فرآیند قبلی...');
+
+    btn.classList.remove('fade-shadow')
+    progress.classList.add('visually-hidden');
+    status.classList.add('visually-hidden');
+    analyzeResult.classList.remove('visually-hidden');
+    analyzeProgress.classList.remove('visually-hidden');
+
     init(); // همون init اسلایدر که خودت نوشتی
   } else {
     console.log('ریستارت');
@@ -208,6 +219,7 @@ btn.addEventListener('click', async () => {
       status.textContent = 'خطا در ارسال';
     }
     const data = await res.json();
+    localStorage.setItem('analyzeRes', JSON.stringify(data));
   } catch (err) {
     status.textContent = 'اینترنت شما مشکل دارد';
   } finally {
@@ -226,6 +238,7 @@ function resetAll() {
   localStorage.removeItem('slider_last_time');
   localStorage.removeItem('checked_state');
   localStorage.removeItem('inprogress');
+  localStorage.removeItem('analyzeRes');
 
   const {unCheckedIcon} = props["data"] ?? '';
   document.querySelectorAll('.checked').forEach(img => {
@@ -233,10 +246,17 @@ function resetAll() {
   });
 
   setProgress(0);
+
   progress.classList.add('visually-hidden');
   status.classList.add('visually-hidden');
+  
   analyzeResult.classList.add('visually-hidden');
   analyzeProgress.classList.add('visually-hidden');
+  resultFace.classList.add('visually-hidden');
+  congras.classList.add('visually-hidden');
+  resultDetail.classList.add('visually-hidden');
+  resultScore.classList.add('visually-hidden');
+  
   btn.classList.remove('fade-shadow');
 }
 
@@ -327,7 +347,17 @@ async function startSlider(startIndex) {
     if (currentIndex >= imagesLength) {
       clearInterval(interval);
       localStorage.setItem('inprogress', JSON.stringify(false));
-      
+
+      const result = getAnalyzeRes();
+      console.log(result);
+
+      resultFace.classList.remove('visually-hidden');
+      congras.classList.remove('visually-hidden');
+      resultDetail.classList.remove('visually-hidden');
+      resultScore.classList.remove('visually-hidden');
+
+      console.log(result);
+
       return;
     }
 
@@ -349,5 +379,17 @@ function saveCheckedState(index, src) {
   const state = getCheckedState();
   state[index] = src;
   localStorage.setItem('checked_state', JSON.stringify(state));
+}
+
+function getAnalyzeRes() {
+  try {
+    const raw = localStorage.getItem('analyzeRes');
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch (e) {
+    console.warn('checked_state خراب بود، ریست شد');
+    localStorage.removeItem('analyzeRes');
+    return {};
+  }
 }
 
