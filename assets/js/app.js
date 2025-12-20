@@ -349,7 +349,22 @@ async function startSlider(startIndex) {
       localStorage.setItem('inprogress', JSON.stringify(false));
 
       const result = getAnalyzeRes();
-      console.log(result);
+      console.log(result.front_image);
+
+      const img = document.createElement('img');
+      img.src = `H:/پروژه‌ها/جذاب شو/backend/config${result.front_image}`;
+      // img.alt = image.id;
+      img.loading = 'lazy';   // بهینه‌سازی
+      img.referrerPolicy = 'no-referrer'; // امنیت
+      img.style.borderRadius = '50%';
+      img.style.border = '4px solid green';
+      img.classList = 'w-100 h-100';
+
+      resultFace.innerHTML = '';
+      resultFace.appendChild(img);
+
+      resultDetail.innerHTML = `${result.strengths}`; 
+      resultScore.innerHTML = `${result.weaknesses}`;     
 
       resultFace.classList.remove('visually-hidden');
       congras.classList.remove('visually-hidden');
