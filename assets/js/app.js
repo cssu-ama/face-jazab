@@ -363,15 +363,38 @@ async function startSlider(startIndex) {
       resultFace.innerHTML = '';
       resultFace.appendChild(img);
 
-      resultDetail.innerHTML = `${result.strengths}`; 
-      resultScore.innerHTML = `${result.weaknesses}`;     
+      const strengths = JSON.parse(result.strengths);
+      const weaknesses = JSON.parse(result.weaknesses);
+      const score = JSON.parse(result.score);
 
+      const strengthsList = document.querySelector('#resultDetail .card:nth-child(2) .card-body ul');
+      strengthsList.innerHTML = '';
+      strengths.forEach(strength => {
+        const li = document.createElement('li');
+        li.textContent = strength;
+        strengthsList.appendChild(li);
+      });
+
+      const weaknessesList = document.querySelector('#resultDetail .card:nth-child(1) .card-body ul');
+      weaknessesList.innerHTML = '';
+      weaknesses.forEach(weakness => {
+        const li = document.createElement('li');
+        li.textContent = weakness;
+        weaknessesList.appendChild(li);
+      });
+
+      const scoreRes = document.querySelector('#resultScore .card:nth-child(1) .card-body h3 span');
+      scoreRes.innerHTML = '';
+      scoreRes.textContent = score;
+
+      const optimizeRes = document.querySelector('#resultScore .card:nth-child(2) .card-body h3 span');
+      optimizeRes.innerHTML = '';
+      optimizeRes.textContent = score;
+         
       resultFace.classList.remove('visually-hidden');
       congras.classList.remove('visually-hidden');
       resultDetail.classList.remove('visually-hidden');
       resultScore.classList.remove('visually-hidden');
-
-      console.log(result);
 
       return;
     }
