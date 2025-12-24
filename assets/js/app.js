@@ -29,6 +29,11 @@ const siteImages = [
   {id: "check-icon", classList: "w-100", name: "checkIcon", isClass: true},
   {id: "course-banner-wrapper", classList: "w-100 rounded", name: "courseBannerLg"},
   {id: "finishIcon", classList: "h-100", name: "finishIcon"},
+  {id: "jawIcon", classList: "w-100 h-100", name: "jawIcon"},
+  {id: "eyesIcon", classList: "w-100 h-100", name: "eyesIcon"},
+  {id: "noseIcon", classList: "w-100 h-100", name: "noseIcon"},
+  {id: "faceAnalyzeIcon", classList: "w-100 h-100", name: "faceAnalyzeIcon"},
+  {id: "finalizeAnalyzeIcon", classList: "w-100 h-100", name: "finalizeAnalyzeIcon"},
   {id: "unCheckedIcon", classList: "w-100 h-100 checked", name: "unCheckedIcon", isClass: true}
 ];
 
@@ -49,7 +54,7 @@ const resultScore = document.querySelector('#resultScore');
 
 const STORAGE_INDEX = 'slider_index';
 const STORAGE_TIME = 'slider_last_time';
-const INTERVAL = 1 * 5 * 1000; // 2 دقیقه
+const INTERVAL = 1 * 5 * 1000;
 
 const imagesLength = 5;
 
@@ -73,7 +78,7 @@ async function getSiteImages() {
     const {data} = props;
 
     renderBaseImages(data);
-    renderCheckedImages(data);  // overrid
+    renderCheckedImages(data);
   } catch(error) {
     console.error(error);
   }
@@ -90,8 +95,8 @@ function renderBaseImages(images) {
         const img = document.createElement('img');
         img.src = images[image.name];
         img.alt = image.name;
-        img.loading = 'lazy';   // بهینه‌سازی
-        img.referrerPolicy = 'no-referrer'; // امنیت
+        img.loading = 'lazy';
+        img.referrerPolicy = 'no-referrer';
         img.classList = image.classList;
         node.appendChild(img);
       });
@@ -105,8 +110,8 @@ function renderBaseImages(images) {
       const img = document.createElement('img');
       img.src = images[image.name];
       img.alt = image.id;
-      img.loading = 'lazy';   // بهینه‌سازی
-      img.referrerPolicy = 'no-referrer'; // امنیت
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
       img.classList = image.classList;
 
       container.appendChild(img);
@@ -121,9 +126,9 @@ function renderCheckedImages(images) {
 
   imgEls.forEach((img, index) => {
     if (state[index]) {
-      img.src = state[index]; // 👈 از لوکال
+      img.src = state[index];
     } else {
-      img.src = images.unCheckedIcon; // 👈 از API
+      img.src = images.unCheckedIcon;
     }
   });
 }
@@ -163,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     analyzeResult.classList.remove('visually-hidden');
     analyzeProgress.classList.remove('visually-hidden');
 
-    init(); // همون init اسلایدر که خودت نوشتی
+    init();
   } else {
     console.log('ریستارت');
     resetAll();
@@ -200,7 +205,7 @@ btn.addEventListener('click', async () => {
       
   btn.classList.add('fade-shadow');
 
-  fakeProgress(1000 + Math.random() * 2000); // بین 1 تا 3 ثانیه
+  fakeProgress(1000 + Math.random() * 2000);
 
   const faceData = new FormData();
   faceData.append('front_image', frontFile);
@@ -290,7 +295,7 @@ async function getImage() {
 }
 
 async function init() {
-  restoreCheckedImages(); // 👈 اول وضعیت قبلی
+  restoreCheckedImages();
 
   const index = getCurrentIndex();
   await startSlider(index);
@@ -353,9 +358,8 @@ async function startSlider(startIndex) {
 
       const img = document.createElement('img');
       img.src = `H:/پروژه‌ها/جذاب شو/backend/config${result.front_image}`;
-      // img.alt = image.id;
-      img.loading = 'lazy';   // بهینه‌سازی
-      img.referrerPolicy = 'no-referrer'; // امنیت
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
       img.style.borderRadius = '50%';
       img.style.border = '4px solid green';
       img.classList = 'w-100 h-100';
@@ -410,7 +414,7 @@ async function showImage(index) {
   imgEls[index].src = image;
   localStorage.setItem(STORAGE_INDEX, index);
   localStorage.setItem(STORAGE_TIME, Date.now());
-  saveCheckedState(index, image)
+  saveCheckedState(index, image);
 }
 
 function saveCheckedState(index, src) {
