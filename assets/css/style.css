@@ -135,7 +135,6 @@ main .card-body p.sub {
   text-align: center;
   cursor: pointer;
   border-radius: 12.5px;
-  width: 90%;
   direction: rtl;
   background-color: #0dcaf030;
   backdrop-filter: blur(5px);
@@ -147,11 +146,6 @@ main .card-body p.sub {
 @media (max-width: 992px) {
     #navDropdown {
         width: 100% !important;
-    }
-
-    main #cardContainer {
-      flex-direction: column !important;
-      gap: 3rem !important;
     }
 
     main {
@@ -171,9 +165,6 @@ main .card-body p.sub {
   background: #CE31B0;
   background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
   border-radius: 15px !important;
-  border: none;
-  box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
-  transition: box-shadow 0.8s ease;
 }
 
 #analyzeBtn.fade-shadow {
@@ -327,9 +318,6 @@ section > div > div  div > img.after:nth-child(2) {
   background: #CE31B0;
   background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
   border-radius: 15px !important;
-  border: none;
-  box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
-  transition: box-shadow 0.8s ease;
 }
 
 #course-banner-wrapper {
@@ -426,4 +414,28 @@ header {
     height: auto !important;
     align-self: center;
   }
+}
+
+.neon-button {
+    cursor: pointer;
+    color: white;
+    outline: none;
+    box-shadow: 0 0 15px rgba(214, 51, 132, 0.6);
+    transition: all 0.3s ease;
+}
+
+.neon-button:hover {
+    box-shadow: 0 0 20px rgba(214, 51, 132, 0.8);
+    transform: translateY(-2px);
+}
+
+@media (min-width: 576px) {
+  .upload-box,
+  .open-camera-btn {
+    width: 50% !important;
+  }
+}
+
+main .card {
+  height: fit-content;
 }
