@@ -159,6 +159,13 @@ const STORAGE_TIME = 'slider_last_time';
 const INTERVAL = 1 * 5 * 1000;
 const imagesLength = 5;
 const props = {};
+// modals
+const noFileModalEl = document.getElementById('noFileModal');
+const noFileModal = new bootstrap.Modal(noFileModalEl);
+const loadingModalEl = document.getElementById('loadingModal');
+const loadingModal = new bootstrap.Modal(loadingModalEl);
+const invalidImageModalEl = document.getElementById('invalidImageModal');
+const invalidImageModal = new bootstrap.Modal(invalidImageModalEl);
 async function getSiteImages() {
   try {
     const response = await fetch('http://127.0.0.1:8000/api/site-images/', {
@@ -225,8 +232,6 @@ function renderCheckedImages(images) {
   });
 }
 getSiteImages();
-const noFileModalEl = document.getElementById('noFileModal');
-const noFileModal = new bootstrap.Modal(noFileModalEl);
 document.addEventListener('DOMContentLoaded', () => {
   if (isInProgress()) {
     console.log('ادامه فرآیند قبلی...');
@@ -258,11 +263,42 @@ uploadBoxes.forEach((btn, index) => {
     previewWrappers[index].classList.add('visually-hidden');
   });
 });
-firstNextBtn.addEventListener('click', function() {
+firstNextBtn.addEventListener('click', async function() {
   const frontFile = fileInputs[0].files[0];
   if (!frontFile) {
     noFileModal.show();
     return;
+  }
+  const faceData = new FormData();
+  faceData.append('front_image', frontFile);
+  try {
+    loadingModal.show(); // نمایش اسپینر
+    const res = await fetch('http://127.0.0.1:8000/api/front-face-detection/', {
+      method: 'POST',
+      body: faceData
+    });
+    // اضافه کردن یک تاخیر بسیار کوچک برای اطمینان از اینکه انیمیشن بوت استرپ تمام شده باشد
+    await new Promise(resolve => setTimeout(resolve, 500));
+    if (res.ok) {
+      const data = await res.json();
+      // اینجا اگر قرار است به مرحله بعد بروید، کدهای انتقال را بنویسید
+      console.log("تصویر تایید شد", data);
+    } else {
+      invalidImageModal.show();
+    }
+  } catch (err) {
+    console.error(err);
+    invalidImageModal.show();
+  } finally {
+    // بستن اصولی مدال بوت‌استرپ
+    loadingModal.hide();
+    // اطمینان از حذف پس‌زمینه سیاه (Backdrop) در صورت بروز باگ در بوت‌استرپ
+    loadingModalEl.addEventListener('hidden.bs.modal', () => {
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.style.overflow = 'auto';
+    }, {
+      once: true
+    });
   }
 });
 

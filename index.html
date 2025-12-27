@@ -146,6 +146,7 @@
 
             <div class="uploadBox upload-box text-info fs-four w-100">برای آپلود عکس اینجا ضربه بزن..</div>
             <button style="border-radius: 10px;" type="button" class="btn w-100 btn-outline-info btn-sm mt-2 open-camera-btn fs-four py-2">یا استفاده از دوربین 📷</button>
+
             <input class="fileInput" type="file" style="display:none;">
             <div class="preview-wrapper mt-3 position-relative visually-hidden">
               <img class="img-preview rounded-3 w-100" style="max-height:200px;object-fit:cover;">
@@ -159,7 +160,7 @@
         </div>
       </div>
 
-      <button id="firstNext" type="button" class="btn neon-button mt-5 mb-2 text-white fs-two" style="width: 25rem;">برو مرحله بعدی</button>
+      <button id="firstNext" type="button" class="btn neon-button mt-4 mb-2 text-white fs-two" style="width: 25rem;">برو مرحله بعدی</button>
       <button id="analyzeBtn" type="button" class="btn neon-button mt-5 mb-2 text-white fs-two visually-hidden" style="width: 25rem;">شروع
         آنالیز</button>
       <p class="fs-four" style="opacity: 0.8; color: rgba(210, 210, 210, 0.85)">(اطلاعات شما کاملا محرمانه است و هیچ‌وقت
@@ -177,9 +178,7 @@
   <div class="modal fade" id="noFileModal" tabindex="-1" aria-labelledby="noFileModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content bg-dark">
-        <div class="modal-body text-white fs-four" style="direction: rtl;">
-          لطفا هر دو عکس از زاویه نیم‌رخ و روبه‌رو را بارگذاری کنید..
-        </div>
+        <div class="modal-body text-white fs-four" style="direction: rtl;">عکسی آپلود نشده....</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary fs-four" data-bs-dismiss="modal">باشه</button>
         </div>
@@ -426,13 +425,15 @@
   </footer>
 
   <div class="modal fade" id="loadingModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content d-flex flex-column justify-content-center align-items-center bg-dark text-white text-center p-4">
-      <div class="spinner-border text-info mb-3" role="status"></div>
-      <p class="mb-0 fs-four">در حال آپلود عکس...</p>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content d-flex flex-column justify-content-center align-items-center bg-dark text-white text-center p-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mb-0 fs-four">در حال آپلود عکس...</p>
+      </div>
     </div>
   </div>
-</div>
 
 <div class="modal fade" id="invalidImageModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
