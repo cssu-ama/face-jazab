@@ -120,7 +120,7 @@ main .input-card .card-body p.card-title {
 }
 
 main .card-body img.face {
-  width: 55px;
+  width: 75px;
 }
 
 main .card-body p.sub {
@@ -161,7 +161,8 @@ main .card-body p.sub {
     }
 }
 
-#analyzeBtn {
+#analyzeBtn,
+#firstNext {
   background: #CE31B0;
   background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
   border-radius: 15px !important;
@@ -190,7 +191,8 @@ main .card-body p.sub {
     width: 325px !important;  
   }
   
-  main #analyzeBtn {
+  main #analyzeBtn,
+  main #firstNext {
     width: 325px !important;
   }
 
