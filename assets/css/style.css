@@ -162,7 +162,8 @@ main .card-body p.sub {
 }
 
 #analyzeBtn,
-#firstNext {
+#firstNext,
+#secondNext {
   background: #CE31B0;
   background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
   border-radius: 15px !important;
@@ -192,7 +193,8 @@ main .card-body p.sub {
   }
   
   main #analyzeBtn,
-  main #firstNext {
+  main #firstNext,
+  main #secondNext {
     width: 325px !important;
   }
 

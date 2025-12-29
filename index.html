@@ -161,18 +161,11 @@
       </div>
 
       <button id="firstNext" type="button" class="btn neon-button mt-4 mb-2 text-white fs-two" style="width: 25rem;">برو مرحله بعدی</button>
+      <button id="secondNext" type="button" class="btn neon-button mt-4 mb-2 text-white fs-two visually-hidden" style="width: 25rem;">برو مرحله بعدی</button>
       <button id="analyzeBtn" type="button" class="btn neon-button mt-5 mb-2 text-white fs-two visually-hidden" style="width: 25rem;">شروع
         آنالیز</button>
-      <p class="fs-four" style="opacity: 0.8; color: rgba(210, 210, 210, 0.85)">(اطلاعات شما کاملا محرمانه است و هیچ‌وقت
+      <p id="privacy" class="fs-four" style="opacity: 0.8; color: rgba(210, 210, 210, 0.85)">(اطلاعات شما کاملا محرمانه است و هیچ‌وقت
         عکس‌تان پست نخواهد شد)</p>
-
-      <div class="progress mt-3 w-75 visually-hidden" style="height: 20px; direction: rtl;">
-        <div id="progressBar" class="progress-bar bg-success" role="progressbar">0%</div>
-      </div>
-      <div id="status" class="mt-2 text-success visually-hidden" style="direction: rtl !important;"></div>
-    </div>
-
-
   </main>
 
   <div class="modal fade" id="noFileModal" tabindex="-1" aria-labelledby="noFileModalLabel" aria-hidden="true">
@@ -417,7 +410,7 @@
   </div>
 </div>
 
-  <footer>
+  <footer class="mt-3">
     <div class="h-100 container d-flex flex-column justify-content-center align-items-center text-center">
       <p class="mb-0 text-white text-center fs-four" style="direction: rtl;">تمام حقوق مادی و معنوی سایت برای جذاب شو
         محفوظ است.</p>
@@ -437,10 +430,10 @@
 
 <div class="modal fade" id="invalidImageModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-body fs-four">
-        ❌ عکس انتخاب‌شده شرایط لازم را ندارد  
-        (نور، وضوح یا زاویه نادرست)
+    <div class="modal-content bg-dark text-white d-flex flex-column justify-content-center align-items-end">
+      <div class="modal-body fs-four" style="direction: rtl;">
+         عکس انتخاب‌شده شرایط لازم را ندارد  
+        (نور، وضوح یا زاویه نادرست)...
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">باشه</button>

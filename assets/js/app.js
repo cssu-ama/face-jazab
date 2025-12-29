@@ -137,16 +137,15 @@ const siteImages = [{
   name: "unCheckedIcon",
   isClass: true
 }];
+const uploadCards = document.querySelectorAll('#cardContainer .card');
 const uploadBoxes = document.querySelectorAll('.uploadBox');
 const fileInputs = document.querySelectorAll('.fileInput');
 const firstNextBtn = document.querySelector('#firstNext');
+const secondNextBtn = document.querySelector('#secondNext');
 const btn = document.querySelector('#analyzeBtn');
 const previewWrappers = document.querySelectorAll('.preview-wrapper');
 const previewImgs = document.querySelectorAll('.img-preview');
 const removeBtns = document.querySelectorAll('.remove-image');
-const progress = document.querySelector('.progress');
-const bar = document.getElementById('progressBar');
-const status = document.querySelector('#status');
 const courseBanner = document.querySelector('#course-banner');
 const analyzeResult = document.querySelector('#analyzeResult');
 const analyzeProgress = document.querySelector('#analyzeProgress');
@@ -154,6 +153,8 @@ const resultFace = document.querySelector('#resultFace');
 const congras = document.querySelector('#congras');
 const resultDetail = document.querySelector('#resultDetail');
 const resultScore = document.querySelector('#resultScore');
+// Global Variables
+const faceData = new FormData();
 const STORAGE_INDEX = 'slider_index';
 const STORAGE_TIME = 'slider_last_time';
 const INTERVAL = 1 * 5 * 1000;
@@ -234,15 +235,11 @@ function renderCheckedImages(images) {
 getSiteImages();
 document.addEventListener('DOMContentLoaded', () => {
   if (isInProgress()) {
-    console.log('ادامه فرآیند قبلی...');
-    btn.classList.remove('fade-shadow')
-    progress.classList.add('visually-hidden');
-    status.classList.add('visually-hidden');
+    btn.classList.remove('fade-shadow');
     analyzeResult.classList.remove('visually-hidden');
     analyzeProgress.classList.remove('visually-hidden');
     init();
   } else {
-    console.log('ریستارت');
     resetAll();
   }
 });
@@ -269,20 +266,26 @@ firstNextBtn.addEventListener('click', async function() {
     noFileModal.show();
     return;
   }
-  const faceData = new FormData();
+  const tempFaceData = new FormData();
+  tempFaceData.append('front_image', frontFile);
   faceData.append('front_image', frontFile);
   try {
-    loadingModal.show(); // نمایش اسپینر
+    loadingModal.show();
     const res = await fetch('http://127.0.0.1:8000/api/front-face-detection/', {
       method: 'POST',
-      body: faceData
+      body: tempFaceData
     });
-    // اضافه کردن یک تاخیر بسیار کوچک برای اطمینان از اینکه انیمیشن بوت استرپ تمام شده باشد
     await new Promise(resolve => setTimeout(resolve, 500));
-    if (res.ok) {
-      const data = await res.json();
-      // اینجا اگر قرار است به مرحله بعد بروید، کدهای انتقال را بنویسید
-      console.log("تصویر تایید شد", data);
+    if (!res.ok) {
+      // const data = await res.json();
+      // if (data.isCorrect) {
+      uploadCards[0].classList.add("visually-hidden");
+      firstNextBtn.classList.add("visually-hidden");
+      secondNextBtn.classList.remove("visually-hidden");
+      uploadCards[1].classList.remove("visually-hidden");
+      // } else {
+      //   invalidImageModal.show();
+      // }
     } else {
       invalidImageModal.show();
     }
@@ -290,9 +293,48 @@ firstNextBtn.addEventListener('click', async function() {
     console.error(err);
     invalidImageModal.show();
   } finally {
-    // بستن اصولی مدال بوت‌استرپ
     loadingModal.hide();
-    // اطمینان از حذف پس‌زمینه سیاه (Backdrop) در صورت بروز باگ در بوت‌استرپ
+    loadingModalEl.addEventListener('hidden.bs.modal', () => {
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.style.overflow = 'auto';
+    }, {
+      once: true
+    });
+  }
+});
+secondNextBtn.addEventListener('click', async function() {
+  const sideFile = fileInputs[1].files[0];
+  if (!sideFile) {
+    noFileModal.show();
+    return;
+  }
+  const tempFaceData = new FormData();
+  tempFaceData.append('side_image', sideFile);
+  faceData.append('side_image', sideFile);
+  try {
+    loadingModal.show();
+    const res = await fetch('http://127.0.0.1:8000/api/side-face-detection/', {
+      method: 'POST',
+      body: tempFaceData
+    });
+    await new Promise(resolve => setTimeout(resolve, 500));
+    if (!res.ok) {
+      // const data = await res.json();
+      // if (data.isCorrect) {
+      secondNextBtn.classList.add("visually-hidden");
+      btn.classList.remove("visually-hidden");
+      btn.click();
+      // } else {
+      //   invalidImageModal.show();
+      // }
+    } else {
+      invalidImageModal.show();
+    }
+  } catch (err) {
+    console.error(err);
+    invalidImageModal.show();
+  } finally {
+    loadingModal.hide();
     loadingModalEl.addEventListener('hidden.bs.modal', () => {
       document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
       document.body.style.overflow = 'auto';
@@ -318,36 +360,36 @@ btn.addEventListener('click', async () => {
     localStorage.setItem('inprogress', JSON.stringify(false));
     return;
   }
+  loadingModal.show();
   localStorage.setItem('inprogress', JSON.stringify(true));
-  progress.classList.remove("visually-hidden");
-  status.classList.remove("visually-hidden");
-  status.textContent = 'در حال آپلود...';
   btn.classList.add('fade-shadow');
-  fakeProgress(1000 + Math.random() * 2000);
-  const faceData = new FormData();
-  faceData.append('front_image', frontFile);
-  faceData.append('side_image', sideFile);
   try {
     const res = await fetch('http://127.0.0.1:8000/api/face-analysis/', {
       method: 'POST',
       body: faceData
     });
     if (res.ok) {
-      setProgress(100);
-      status.textContent = 'ارسال شد';
+      const data = await res.json();
+      localStorage.setItem('analyzeRes', JSON.stringify(data));
+      btn.classList.remove('fade-shadow');
+      analyzeResult.classList.remove('visually-hidden');
+      analyzeProgress.classList.remove('visually-hidden');
+      btn.classList.add("visually-hidden");
+      document.querySelector('#privacy').classList.add("visually-hidden");
     } else {
-      status.textContent = 'خطا در ارسال';
+      invalidImageModal.show();
     }
-    const data = await res.json();
-    localStorage.setItem('analyzeRes', JSON.stringify(data));
   } catch (err) {
-    status.textContent = 'اینترنت شما مشکل دارد';
+    console.error(err);
+    invalidImageModal.show();
   } finally {
-    setTimeout(() => btn.classList.remove('fade-shadow'), 1100);
-    setTimeout(() => progress.classList.add('visually-hidden'), 1500);
-    setTimeout(() => status.classList.add('visually-hidden'), 1900);
-    setTimeout(() => analyzeResult.classList.remove('visually-hidden'), 2300);
-    setTimeout(() => analyzeProgress.classList.remove('visually-hidden'), 2700);
+    loadingModal.hide();
+    loadingModalEl.addEventListener('hidden.bs.modal', () => {
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.style.overflow = 'auto';
+    }, {
+      once: true
+    });
     init();
   }
 });
@@ -364,9 +406,6 @@ function resetAll() {
   document.querySelectorAll('.checked').forEach(img => {
     img.src = unCheckedIcon;
   });
-  setProgress(0);
-  progress.classList.add('visually-hidden');
-  status.classList.add('visually-hidden');
   analyzeResult.classList.add('visually-hidden');
   analyzeProgress.classList.add('visually-hidden');
   resultFace.classList.add('visually-hidden');
@@ -374,25 +413,6 @@ function resetAll() {
   resultDetail.classList.add('visually-hidden');
   resultScore.classList.add('visually-hidden');
   btn.classList.remove('fade-shadow');
-}
-
-function fakeProgress(duration) {
-  const start = Date.now();
-
-  function step() {
-    const elapsed = Date.now() - start;
-    const pct = Math.min(100, Math.floor((elapsed / duration) * 100));
-    setProgress(pct);
-    if (pct < 100) {
-      requestAnimationFrame(step);
-    }
-  }
-  step();
-}
-
-function setProgress(value) {
-  bar.style.width = value + '%';
-  bar.textContent = value + '%';
 }
 async function getImage() {
   const res = await fetch('http://127.0.0.1:8000/api/site-images/');
@@ -450,8 +470,8 @@ async function startSlider(startIndex) {
       clearInterval(interval);
       localStorage.setItem('inprogress', JSON.stringify(false));
       const result = getAnalyzeRes();
-      console.log(result.front_image);
       const img = document.createElement('img');
+      // must be changed
       img.src = `H:/پروژه‌ها/جذاب شو/backend/config${result.front_image}`;
       img.loading = 'lazy';
       img.referrerPolicy = 'no-referrer';
