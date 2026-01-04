@@ -1,3 +1,14 @@
+import Lenis from './../../node_modules/lenis/dist/lenis.mjs';
+// Initialize Lenis
+const lenis = new Lenis({
+  autoRaf: true,
+});
+
+// Listen for the scroll event and log the event data
+lenis.on('scroll', (e) => {
+  console.log(e);
+});
+
 const siteImages = [{
   id: "logo",
   classList: "h-100",
@@ -234,6 +245,10 @@ function renderCheckedImages(images) {
 }
 getSiteImages();
 document.addEventListener('DOMContentLoaded', () => {
+  // restore any previously uploaded previews from localStorage
+  restoreUploadedImages();
+  // ensure result elements participate in soft transitions
+  [resultFace, congras, resultDetail, resultScore, analyzeResult, analyzeProgress].forEach(el => { if (el) el.classList.add('soft-transition'); });
   if (isInProgress()) {
     btn.classList.remove('fade-shadow');
     analyzeResult.classList.remove('visually-hidden');
@@ -253,11 +268,15 @@ uploadBoxes.forEach((btn, index) => {
     const url = URL.createObjectURL(file);
     previewImgs[index].src = url;
     previewWrappers[index].classList.remove('visually-hidden');
+    // save uploaded image to localStorage for later use
+    saveUploadedImage(index, file).catch(err => console.warn('saveUploadedImage failed', err));
   });
   removeBtns[index].addEventListener('click', () => {
     fileInputs[index].value = '';
     previewImgs[index].src = '';
     previewWrappers[index].classList.add('visually-hidden');
+    // remove saved uploaded image from localStorage
+    removeSavedUploadedImage(index);
   });
 });
 firstNextBtn.addEventListener('click', async function() {
@@ -283,6 +302,8 @@ firstNextBtn.addEventListener('click', async function() {
       firstNextBtn.classList.add("visually-hidden");
       secondNextBtn.classList.remove("visually-hidden");
       uploadCards[1].classList.remove("visually-hidden");
+
+      
       // } else {
       //   invalidImageModal.show();
       // }
@@ -472,7 +493,9 @@ async function startSlider(startIndex) {
       const result = getAnalyzeRes();
       const img = document.createElement('img');
       // must be changed
-      img.src = `H:/پروژه‌ها/جذاب شو/backend/config${result.front_image}`;
+      const saved0 = localStorage.getItem('uploaded_image_0');
+      img.src = saved0; // از پیش‌نمایش آپلودشده استفاده کن
+      img.alt = 'Result Face';
       img.loading = 'lazy';
       img.referrerPolicy = 'no-referrer';
       img.style.borderRadius = '50%';
@@ -503,10 +526,12 @@ async function startSlider(startIndex) {
       const optimizeRes = document.querySelector('#resultScore .card:nth-child(2) .card-body h3 span');
       optimizeRes.innerHTML = '';
       optimizeRes.textContent = score;
-      resultFace.classList.remove('visually-hidden');
-      congras.classList.remove('visually-hidden');
-      resultDetail.classList.remove('visually-hidden');
-      resultScore.classList.remove('visually-hidden');
+      // show with smooth transitions and scroll to the resultFace
+      softShow(resultFace);
+      softShow(congras);
+      softShow(resultDetail);
+      softShow(resultScore);
+      softScrollTo(resultScore);
       return;
     }
     await showImage(currentIndex);
@@ -537,4 +562,92 @@ function getAnalyzeRes() {
     localStorage.removeItem('analyzeRes');
     return {};
   }
+}
+// Helpers to persist uploaded images in localStorage as data URLs
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveUploadedImage(index, file) {
+  try {
+    const dataUrl = await readFileAsDataURL(file);
+    localStorage.setItem(`uploaded_image_${index}`, dataUrl);
+  } catch (e) {
+    console.error('Error saving uploaded image', e);
+    throw e;
+  }
+}
+
+function removeSavedUploadedImage(index) {
+  localStorage.removeItem(`uploaded_image_${index}`);
+}
+
+function restoreUploadedImages() {
+  for (let i = 0; i < fileInputs.length; i++) {
+    const dataUrl = localStorage.getItem(`uploaded_image_${i}`);
+    if (dataUrl) {
+      previewImgs[i].src = dataUrl;
+      previewWrappers[i].classList.remove('visually-hidden');
+    }
+  }
+}
+
+// Soft show/hide helpers and scroll helper
+function getSoftDurationMs(){
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--soft-duration') || '260ms';
+  const ms = v.trim().match(/([\d.]+)ms/);
+  if (ms) return parseFloat(ms[1]);
+  const s = v.trim().match(/([\d.]+)s/);
+  if (s) return parseFloat(s[1]) * 1000;
+  return 260;
+}
+
+function softShow(el){
+  if (!el) return;
+  // ensure element can transition
+  el.classList.remove('soft-hidden');
+  el.classList.remove('visually-hidden');
+  // start hidden then force reflow then remove hidden state to animate
+  el.classList.add('soft-hidden');
+  void el.offsetWidth;
+  el.classList.remove('soft-hidden');
+}
+
+// function softHide(el){
+//   if (!el) return;
+//   el.classList.remove('soft-hidden');
+//   void el.offsetWidth;
+//   el.classList.add('soft-hidden');
+//   const onEnd = (e) => {
+//     if (e.target !== el) return;
+//     el.classList.add('visually-hidden');
+//     el.removeEventListener('transitionend', onEnd);
+//   };
+//   el.addEventListener('transitionend', onEnd);
+// }
+
+// function softScrollTo(el){
+//   if (!el) return;
+//   const delay = getSoftDurationMs() + 40;
+//   setTimeout(()=>{
+//     try{ el.scrollIntoView({behavior: 'smooth', block: 'center'}); }catch(e){}
+//   }, delay);
+// }
+
+function softScrollTo(el) {
+  if (!el) return;
+
+  // به جای setTimeout و scrollIntoView از متد خود لنیس استفاده می‌کنیم
+  lenis.scrollTo(el, {
+    offset: 0,           // فاصله از المان
+    duration: 1.5,       // مدت زمان (ثانیه) - جایگزین تابع getSoftDurationMs شما
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // شتاب نرم (Expo)
+    lock: true,         // اجازه به کاربر برای متوقف کردن اسکرول
+    center: true         // مشابه block: 'center' در scrollIntoView
+  });
 }
