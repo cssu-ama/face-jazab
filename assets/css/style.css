@@ -1,8 +1,8 @@
 :root {
-    --dark-gray: #2d2d2d;
-    --glass-gray: #353535;
-    --primary: #0dcaf0;
-    --golden-glass: rgba(65, 62, 57, 0.65);
+  --dark-gray: #2d2d2d;
+  --glass-gray: #353535;
+  --primary: #0dcaf0;
+  --golden-glass: rgba(65, 62, 57, 0.65);
 }
 
 html {
@@ -10,11 +10,11 @@ html {
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Vazirmatn;
-    z-index: 100;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Vazirmatn;
+  z-index: 100;
 }
 
 .navbar-nav .nav-link.active {
@@ -42,34 +42,34 @@ main .icon {
 }
 
 header {
-    height: 75px !important;
-    background-color: var(--dark-gray);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  height: 75px !important;
+  background-color: var(--dark-gray);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .dropdown-toggle::after {
-    display: none !important;
+  display: none !important;
 }
 
 .custom-triangle {
-    width: 12px;
-    height: 8px;
-    display: inline-block;
-    color: #fff;
+  width: 12px;
+  height: 8px;
+  display: inline-block;
+  color: #fff;
 }
 
 #navMobileBtn {
-    border: none;
-    transform: rotate(90deg);
-    outline: none;
+  border: none;
+  transform: rotate(90deg);
+  outline: none;
 }
 
 .navbar-toggler:focus,
 .navbar-toggler:active,
 button:focus,
 button:active {
-    outline: none !important;
-    box-shadow: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 main {
@@ -148,33 +148,39 @@ main .card-body p.sub {
 }
 
 @media (max-width: 992px) {
-    #navDropdown {
-        width: 100% !important;
-    }
+  #navDropdown {
+    width: 100% !important;
+  }
 
-    main {
-      height: fit-content !important;
-    }
+  main {
+    height: fit-content !important;
+  }
 
-    section .dash-line {
-       display: none;
-    }
+  section .dash-line {
+    display: none;
+  }
 
-    #course-banner-wrapper {
-      width: 100% !important;
-    }
+  #course-banner-wrapper {
+    width: 100% !important;
+  }
 }
 
 #analyzeBtn,
 #firstNext,
-#secondNext {
-  background: #CE31B0;
-  background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+#secondNext,
+#reanalyzeBtn {
+  background: #ce31b0;
+  background: linear-gradient(
+    90deg,
+    rgba(206, 49, 176, 1) 0%,
+    rgba(158, 98, 210, 1) 55%,
+    rgba(116, 141, 240, 1) 100%
+  );
   border-radius: 15px !important;
 }
 
 #analyzeBtn.fade-shadow {
-  box-shadow: 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 #progressBar {
@@ -186,16 +192,22 @@ main .card-body p.sub {
 }
 
 .modal-footer .btn {
-  background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(206, 49, 176, 1) 0%,
+    rgba(158, 98, 210, 1) 55%,
+    rgba(116, 141, 240, 1) 100%
+  );
   border: none;
-  box-shadow: -24px 10px 43px -8px rgba(232,143,229,0.6), 22px -12px 43px -8px rgba(232,143,229,0.6);
+  box-shadow: -24px 10px 43px -8px rgba(232, 143, 229, 0.6),
+    22px -12px 43px -8px rgba(232, 143, 229, 0.6);
 }
 
 @media (max-width: 576px) {
-  main #cardContainer .card {    
-    width: 325px !important;  
+  main #cardContainer .card {
+    width: 325px !important;
   }
-  
+
   main #analyzeBtn,
   main #firstNext,
   main #secondNext {
@@ -216,8 +228,8 @@ main .card-body p.sub {
   section .face {
     height: 10rem !important;
   }
-  
-  section > div > div  div > img.after:nth-child(2) {
+
+  section > div > div div > img.after:nth-child(2) {
     transform: translate(57.5px, -115px) !important;
   }
 }
@@ -286,11 +298,11 @@ section .card p {
   margin-bottom: 5rem;
 }
 
-section > div > div  div > img.face {
+section > div > div div > img.face {
   height: 13rem;
 }
 
-section > div > div  div > img.after:nth-child(2) {
+section > div > div div > img.after:nth-child(2) {
   transform: translate(75px, -150px);
 }
 
@@ -306,11 +318,8 @@ section > div > div  div > img.after:nth-child(2) {
   color: #fff;
   font-weight: 600;
   font-size: 1.25rem;
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
 }
 
 #course li {
@@ -323,8 +332,13 @@ section > div > div  div > img.after:nth-child(2) {
 }
 
 #course a {
-  background: #CE31B0;
-  background: linear-gradient(90deg, rgba(206, 49, 176, 1) 0%, rgba(158, 98, 210, 1) 55%, rgba(116, 141, 240, 1) 100%);
+  background: #ce31b0;
+  background: linear-gradient(
+    90deg,
+    rgba(206, 49, 176, 1) 0%,
+    rgba(158, 98, 210, 1) 55%,
+    rgba(116, 141, 240, 1) 100%
+  );
   border-radius: 15px !important;
 }
 
@@ -337,7 +351,6 @@ footer {
   background-color: var(--dark-gray);
   border-top: 2px solid rgba(255, 255, 255, 0.15);
 }
-
 
 /**
  * 8
@@ -425,16 +438,16 @@ header {
 }
 
 .neon-button {
-    cursor: pointer;
-    color: white;
-    outline: none;
-    box-shadow: 0 0 15px rgba(214, 51, 132, 0.6);
-    transition: all 0.3s ease;
+  cursor: pointer;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 15px rgba(214, 51, 132, 0.6);
+  transition: all 0.3s ease;
 }
 
 .neon-button:hover {
-    box-shadow: 0 0 20px rgba(214, 51, 132, 0.8);
-    transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(214, 51, 132, 0.8);
+  transform: translateY(-2px);
 }
 
 @media (min-width: 576px) {
@@ -446,4 +459,24 @@ header {
 
 main .card {
   height: fit-content;
+}
+
+/* Soft transition classes for smooth animations */
+:root {
+  --soft-duration: 260ms;
+}
+
+.soft-transition {
+  transition: opacity var(--soft-duration) ease,
+    visibility var(--soft-duration) ease;
+}
+
+.soft-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.soft-show {
+  opacity: 1;
+  visibility: visible;
 }
