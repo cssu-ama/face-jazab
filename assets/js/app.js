@@ -205,10 +205,13 @@ const invalidImageModalEl = document.getElementById("invalidImageModal");
 const invalidImageModal = new bootstrap.Modal(invalidImageModalEl);
 // Timer
 const TIMER_KEY = "analysis_remaining_time";
-const INITIAL_TIME = 600; // ۱۰ دقیقه به ثانیه
+const INITIAL_TIME = 60; // ۱۰ دقیقه به ثانیه
 
 let timeLeft = null;
 let countdownInterval = null;
+
+// Face Result
+let saved0 = "";
 
 // المان‌های مودال و صفحه
 const timerSpan = document.getElementById("timer");
@@ -306,12 +309,15 @@ function renderCheckedImages(images) {
 getSiteImages();
 document.addEventListener("DOMContentLoaded", () => {
   // remove uploaded images saved in localStorage
+  saved0 = localStorage.getItem("uploaded_image_0");
   try {
     for (let i = 0; i < fileInputs.length; i++) {
       removeSavedUploadedImage(i);
       if (previewImgs[i]) previewImgs[i].src = "";
       if (previewWrappers[i])
         previewWrappers[i].classList.add("visually-hidden");
+
+      removeBtns[i].click();
     }
   } catch (e) {
     console.warn("Error clearing uploaded images", e);
@@ -330,14 +336,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) el.classList.add("soft-transition");
   });
   if (isInProgress()) {
-    btn.classList.remove("fade-shadow");
-    analyzeResult.classList.remove("visually-hidden");
     analyzeProgress.classList.remove("visually-hidden");
     firstNextBtn.classList.add("visually-hidden");
     secondNextBtn.classList.add("visually-hidden");
     btn.classList.add("visually-hidden");
     document.querySelector("#privacy").classList.add("visually-hidden");
+    analyzeResult.classList.remove("visually-hidden");
     uploadCards[0].classList.add("visually-hidden");
+    uploadCards[1].classList.remove("visually-hidden");
+    reanalyzeBtn.classList.remove("visually-hidden");
     init();
   } else {
     // بررسی وضعیت در هنگام لود شدن صفحه
@@ -379,16 +386,13 @@ uploadBoxes.forEach((btn, index) => {
   });
 });
 firstNextBtn.addEventListener("click", async function () {
-  // اگر هنوز تایمری شروع نشده است (اولین بار)
-  if (localStorage.getItem(TIMER_KEY) === null) {
-    timeLeft = INITIAL_TIME;
-    localStorage.setItem(TIMER_KEY, timeLeft);
-    runCountdown();
-  }
-
   // اگر تایمر در حال اجراست
-  if (timeLeft > 0) {
-    timerSpan.innerText = formatTime(timeLeft); // آپدیت زمان قبل از نمایش
+  if (
+    localStorage.getItem(TIMER_KEY) !== null &&
+    localStorage.getItem(TIMER_KEY) > 0
+  ) {
+    timeLeft = localStorage.getItem(TIMER_KEY);
+    runCountdown();
     lockModal.show();
   }
   // اگر زمان تمام شده است
@@ -627,8 +631,11 @@ async function startSlider(startIndex) {
       const result = getAnalyzeRes();
       const img = document.createElement("img");
       // must be changed
-      const saved0 = localStorage.getItem("uploaded_image_0");
-      img.src = saved0; // از پیش‌نمایش آپلودشده استفاده کن
+      if (saved0) {
+        img.src = saved0; // از پیش‌نمایش آپلودشده استفاده کن
+      } else {
+        img.src = "default_image.jpg"; // fallback image
+      }
       img.alt = "Result Face";
       img.loading = "lazy";
       img.referrerPolicy = "no-referrer";
@@ -677,6 +684,13 @@ async function startSlider(startIndex) {
 
       reanalyzeBtn.classList.remove("fade-shadow");
       reanalyzeBtn.classList.remove("visually-hidden");
+
+      // اگر هنوز تایمری شروع نشده است (اولین بار)
+      if (localStorage.getItem(TIMER_KEY) === null) {
+        timeLeft = INITIAL_TIME;
+        localStorage.setItem(TIMER_KEY, timeLeft);
+        runCountdown();
+      }
 
       return;
     }
