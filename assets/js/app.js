@@ -1,3 +1,8 @@
+const siteContent = [
+  {
+    id: "homeTitle",
+  },
+];
 const siteImages = [
   {
     id: "logo",
