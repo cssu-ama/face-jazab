@@ -49,11 +49,11 @@ const siteImages = [
     classList: "face",
     name: "profileWrong",
   },
-  {
-    id: "arrowIcon",
-    classList: "",
-    name: "arrowIcon",
-  },
+  // {
+  //   id: "arrowIcon",
+  //   classList: "",
+  //   name: "arrowIcon",
+  // },
   {
     id: "faceIcon",
     classList: "",
@@ -179,6 +179,7 @@ const firstNextBtn = document.querySelector("#firstNext");
 const secondNextBtn = document.querySelector("#secondNext");
 const btn = document.querySelector("#analyzeBtn");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
+const showCourse = document.querySelector("#showCourse");
 const previewWrappers = document.querySelectorAll(".preview-wrapper");
 const previewImgs = document.querySelectorAll(".img-preview");
 const removeBtns = document.querySelectorAll(".remove-image");
@@ -189,6 +190,8 @@ const resultFace = document.querySelector("#resultFace");
 const congras = document.querySelector("#congras");
 const resultDetail = document.querySelector("#resultDetail");
 const resultScore = document.querySelector("#resultScore");
+const marketingSection = document.querySelector("#marketing");
+const courseBox = document.querySelector("#course h3");
 // Global Variables
 const faceData = new FormData();
 const STORAGE_INDEX = "slider_index";
@@ -205,7 +208,30 @@ const invalidImageModalEl = document.getElementById("invalidImageModal");
 const invalidImageModal = new bootstrap.Modal(invalidImageModalEl);
 // Timer
 const TIMER_KEY = "analysis_remaining_time";
-const INITIAL_TIME = 60; // ۱۰ دقیقه به ثانیه
+const INITIAL_TIME = 2 * 60; // 2 دقیقه به ثانیه
+
+// شمارش درخواست‌های آنالیز که در لوکال‌استوریج نگهداری می‌شود
+const REQUEST_COUNT_KEY = "analyze_request_count";
+
+function getRequestCount() {
+  return parseInt(localStorage.getItem(REQUEST_COUNT_KEY)) || 0;
+}
+
+function incrementRequestCount() {
+  const next = getRequestCount() + 1;
+  localStorage.setItem(REQUEST_COUNT_KEY, next);
+  return next;
+}
+
+function computeCooldownSeconds(requestCount) {
+  // دفعه اول: 2 دقیقه
+  if (requestCount === 1) return 2 * 60;
+  // دفعه دوم: 3 دقیقه
+  if (requestCount === 2) return 3 * 60;
+  // دفعه سوم و بعد از آن: به ازای هر درخواست، دقیقه برابر با شماره درخواست
+  // (برای درخواست 3 => 3min, 4 => 4min, ...)
+  return requestCount * 60;
+}
 
 let timeLeft = null;
 let countdownInterval = null;
@@ -337,6 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   if (isInProgress()) {
     analyzeProgress.classList.remove("visually-hidden");
+    smoothScrollToElement(analyzeProgress);
     firstNextBtn.classList.add("visually-hidden");
     secondNextBtn.classList.add("visually-hidden");
     btn.classList.add("visually-hidden");
@@ -376,6 +403,9 @@ uploadBoxes.forEach((btn, index) => {
     saveUploadedImage(index, file).catch((err) =>
       console.warn("saveUploadedImage failed", err)
     );
+
+    if (index === 0) smoothScrollToElement(firstNextBtn);
+    else smoothScrollToElement(secondNextBtn);
   });
   removeBtns[index].addEventListener("click", () => {
     fileInputs[index].value = "";
@@ -525,11 +555,20 @@ btn.addEventListener("click", async () => {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("analyzeRes", JSON.stringify(data));
+      // افزایش شماره درخواست و تعیین زمان خنک‌کننده بر اساس آن
+      const reqCount = incrementRequestCount();
+      const cooldown = computeCooldownSeconds(reqCount);
+      timeLeft = cooldown;
+      localStorage.setItem(TIMER_KEY, timeLeft);
+      runCountdown();
       btn.classList.remove("fade-shadow");
       analyzeResult.classList.remove("visually-hidden");
       analyzeProgress.classList.remove("visually-hidden");
+      smoothScrollToElement(analyzeProgress);
       btn.classList.add("visually-hidden");
       document.querySelector("#privacy").classList.add("visually-hidden");
+      reanalyzeBtn.classList.remove("visually-hidden");
+      init();
     } else {
       invalidImageModal.show();
     }
@@ -552,6 +591,14 @@ btn.addEventListener("click", async () => {
     );
     init();
   }
+});
+
+showCourse.addEventListener("click", () => {
+  marketingSection.classList.remove("visually-hidden");
+  smoothScrollToElement(marketingSection);
+  setTimeout(() => {
+    smoothScrollToElement(courseBox);
+  }, 1000);
 });
 
 function resetAll() {
@@ -631,11 +678,9 @@ async function startSlider(startIndex) {
       const result = getAnalyzeRes();
       const img = document.createElement("img");
       // must be changed
-      if (saved0) {
-        img.src = saved0; // از پیش‌نمایش آپلودشده استفاده کن
-      } else {
-        img.src = "default_image.jpg"; // fallback image
-      }
+      // if (saved0) {
+      img.src = saved0; // از پیش‌نمایش آپلودشده استفاده کن
+      // }
       img.alt = "Result Face";
       img.loading = "lazy";
       img.referrerPolicy = "no-referrer";
@@ -647,6 +692,23 @@ async function startSlider(startIndex) {
       const strengths = JSON.parse(result.strengths);
       const weaknesses = JSON.parse(result.weaknesses);
       const score = JSON.parse(result.score);
+      let optimize = 0;
+      if (0 <= score && score <= 3) {
+        optimize = score + 3;
+      } else if (3.5 <= score && score <= 4.5) {
+        optimize = score + 2.5;
+      } else if (5 <= score && score <= 6) {
+        optimize = score + 2;
+      } else if (6.5 === score) {
+        optimize = score + 1.5;
+      } else if (7 <= score && score <= 7.5) {
+        optimize = score + 1;
+      } else if (8 <= score && score <= 8.5) {
+        optimize = score + 0.5;
+      } else {
+        optimize = "شما در بهترین حالت خود هستید!";
+      }
+
       const strengthsList = document.querySelector(
         "#resultDetail .card:nth-child(2) .card-body ul"
       );
@@ -665,16 +727,65 @@ async function startSlider(startIndex) {
         li.textContent = weakness;
         weaknessesList.appendChild(li);
       });
+
+      const scoreColor =
+        0 <= score && score <= 4
+          ? "red"
+          : 4.5 <= score && score <= 5
+          ? "yellow"
+          : 5 <= score && score <= 6
+          ? "lightgreen"
+          : 6.5 <= score && score <= 7.5
+          ? "green"
+          : "darkgreen";
+
       const scoreRes = document.querySelector(
         "#resultScore .card:nth-child(1) .card-body h3 span"
       );
-      scoreRes.innerHTML = "";
-      scoreRes.textContent = score;
+
+      // scoreRes.innerHTML = "";
+      if (9 <= score) {
+        document.querySelector(
+          "#resultScore .card:nth-child(1) .card-body h3"
+        ).textContent = "شما در بهترین حالت خود هستید!";
+      } else {
+        scoreRes.textContent = score;
+      }
+
+      document
+        .querySelector("#resultScore .card:nth-child(1) .card-body h3")
+        .classList.add(`${scoreColor}`);
+
+      const optimizeColor =
+        0 <= optimize && optimize <= 4
+          ? "red"
+          : 4.5 <= optimize && optimize <= 5
+          ? "yellow"
+          : 5 <= optimize && optimize <= 6
+          ? "lightgreen"
+          : 6.5 <= optimize && optimize <= 7.5
+          ? "green"
+          : "darkgreen";
+
       const optimizeRes = document.querySelector(
         "#resultScore .card:nth-child(2) .card-body h3 span"
       );
-      optimizeRes.innerHTML = "";
-      optimizeRes.textContent = score;
+      // optimizeRes.innerHTML = "";
+      optimize = 3;
+      if (typeof optimize === "number") {
+        optimizeRes.textContent = optimize;
+        document.querySelector("#showCourse span").textContent = optimize;
+        showCourse.classList.remove("visually-hidden");
+      } else {
+        document.querySelector(
+          "#resultScore .card:nth-child(2) .card-body h3"
+        ).textContent = optimize;
+      }
+
+      document
+        .querySelector("#resultScore .card:nth-child(2) .card-body h3")
+        .classList.add(`${optimizeColor}`);
+
       // show with smooth transitions and scroll to the analyzeResult section
       softShow(resultFace);
       softShow(congras);
@@ -792,10 +903,30 @@ function softScrollTo(el) {
   });
 }
 
+// Robust smooth scroll helper — waits a frame so layout updates settle,
+// then tries `scrollIntoView` and falls back to window.scrollTo if needed.
+function smoothScrollToElement(el) {
+  if (!el) return;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      try {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (e) {
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + window.pageYOffset - window.innerHeight / 2;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    });
+  });
+}
+
 reanalyzeBtn.addEventListener("click", (e) => {
   // اگر هنوز تایمری شروع نشده است (اولین بار)
   if (localStorage.getItem(TIMER_KEY) === null) {
-    timeLeft = INITIAL_TIME;
+    // افزایش شماره درخواست و تعیین زمان خنک‌کننده بر اساس آن
+    const reqCount = incrementRequestCount();
+    const cooldown = computeCooldownSeconds(reqCount);
+    timeLeft = cooldown;
     localStorage.setItem(TIMER_KEY, timeLeft);
     runCountdown();
   }

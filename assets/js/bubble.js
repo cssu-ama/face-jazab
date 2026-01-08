@@ -4,7 +4,7 @@
   glowLayer.style.inset = "0";
   glowLayer.style.pointerEvents = "none";
   glowLayer.style.zIndex = "0";
-  glowLayer.style.width = "100%";  
+  glowLayer.style.width = "100%";
 
   document.documentElement.appendChild(glowLayer);
 
@@ -20,8 +20,8 @@
     [120, 170, 255],
     [120, 170, 255],
     [139, 92, 246],
-    [255, 85, 165],    // very light red (rare)
-    [109, 40, 217]
+    [255, 85, 165], // very light red (rare)
+    [109, 40, 217],
   ];
 
   const cols = Math.ceil(Math.sqrt(count));
@@ -42,15 +42,37 @@
       const cellW = 100 / cols;
       const cellH = 100 / rows;
 
-      const x = col * cellW + Math.random() * cellW;
-      const y = row * cellH + Math.random() * cellH;
+      // موقعیت پایه
+      let x = col * cellW + Math.random() * cellW;
+      let y = row * cellH + Math.random() * cellH;
+
+      // فاصله از مرکز (50%, 50%)
+      const distFromCenterX = Math.abs(x - 50);
+      const distFromCenterY = Math.abs(y - 50);
+      const distFromCenter = Math.sqrt(
+        distFromCenterX ** 2 + distFromCenterY ** 2
+      );
+
+      // دایره‌هایی که در نزدیکی مرکز هستند به حاشیه‌ها منتقل شوند
+      if (distFromCenter < 35) {
+        // جهت حرکت به سمت نزدیک‌ترین حاشیه
+        const moveX = x < 50 ? -1 : 1;
+        const moveY = y < 50 ? -1 : 1;
+
+        x = x + moveX * (35 - distFromCenter) * 0.8;
+        y = y + moveY * (35 - distFromCenter) * 0.8;
+
+        // محدود کردن به محدوده‌های معقول
+        x = Math.max(5, Math.min(95, x));
+        y = Math.max(5, Math.min(95, y));
+      }
 
       const [r, g, b] = colors[Math.floor(Math.random() * colors.length)];
 
       glow.style.position = "absolute";
       glow.style.width = size + "px";
       glow.style.height = size + "px";
-      
+
       if (isTurnRight) {
         glow.style.right = x + "%";
       } else {
@@ -76,7 +98,9 @@
       `;
 
       /* 🫁 Breathing – خیلی نرم */
-      glow.style.animation = `breathingGlow ${Math.random() * 10 + 14}s ease-in-out infinite`;
+      glow.style.animation = `breathingGlow ${
+        Math.random() * 10 + 14
+      }s ease-in-out infinite`;
       glow.style.animationDelay = `${Math.random() * 8}s`;
 
       glowLayer.appendChild(glow);

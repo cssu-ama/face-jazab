@@ -242,7 +242,7 @@
         <div class="card w-lg-50 w-100 danger order-lg-1 order-2">
           <div class="card-title">
             <h3 class="text-white fw-bold text-center mt-3 fs-4">
-              <span style="border-bottom: 5px solid red;">نقاط ضعف</span>
+              <span style="border-bottom: 5px solid red;">نقاط قابل بهبود</span>
             </h3>
           </div>
           <div class="card-body d-flex flex-column align-items-center">
@@ -267,7 +267,7 @@
         <div class="card w-lg-50 w-100 result order-lg-1 order-2">
           <div class="card-body d-flex flex-column align-items-center">
             <h3 class="text-white fw-bold py-3">
-              پتانسیل رشد =
+              قابل بهبود تا =
               <span>x</span>
             </h3>
           </div>
@@ -282,16 +282,19 @@
           </div>
         </div>
       </div>
-      <button id="reanalyzeBtn" type="button" class="btn neon-button mt-5 mb-2 text-white fs-two visually-hidden"
-        style="width: 25rem;">آنالیز دوباره</button>
+      <button id="showCourse" type="button" class="btn neon-button mt-5 mb-2 text-white fs-two visually-hidden"
+        style="width: 25rem;">بهم کمک کن تا به
+        <span>x</span>
+        برسم
+      </button>
     </div>
   </section>
 
   <section id="marketing" class="my-3 visually-hidden">
     <div style="z-index: 100 !important;"
       class="container d-flex flex-column justify-content-between align-items-center text-center gap-2">
-      <h2 style="direction: rtl;" class="text-white fs-two">می‌خوای همین الان نقاط ضعفت رو مرحله به مرحله رفع کنی؟</h2>
-      <div id="arrowIcon"></div>
+      <!-- <h2 style="direction: rtl;" class="text-white fs-two">می‌خوای همین الان نقاط ضعفت رو مرحله به مرحله رفع کنی؟</h2>
+      <div id="arrowIcon"></div> -->
 
       <div class="card w-100" id="statistics">
         <div class="card-body d-flex flex-row justify-content-evenly align-items-center">
@@ -326,23 +329,26 @@
             <div
               class="w-lg-75 w-100 d-flex flex-column order-lg-1 order-2 justify-content-center align-items-end align-self-end">
               <div id="courseTitle" class="align-self-lg-end align-self-center"></div>
-              <h3 class="mb-4 fs-sm-2 fs-3 align-self-lg-end align-self-center">آموزش ارتقای ظاهری مردان بدون جراحی!
+              <h3 class="mb-4 fs-sm-2 fs-3 align-self-lg-end align-self-center">
+                آموزش ارتقای ظاهری مردان بدون
+                <span class="text-danger">جراحی</span>
+                !
               </h3>
               <div class="w-100">
                 <div
                   class="d-flex flex-lg-row flex-column justify-content-between align-items-lg-center align-items-end gap-4">
                   <div
                     class="w-lg-25 w-100 d-flex flex-column order-lg-1 order-2 justify-content-between align-items-center">
-                    <div style="border-radius: 5px; width: 175px;"
-                      class="border border-white mb-3 p-2 d-flex flex-column justify-content-center align-items-center text-center py-2 px-1">
+                    <div style="border-radius: 5px; width: 250px;"
+                      class="border border-white mb-3 p-3 d-flex flex-column justify-content-center align-items-center text-center py-2 px-1">
                       <p class="text-white fw-bolder mb-0 fs-three">قیمت اصلی:</p>
                       <p class="text-danger fw-bolder text-decoration-line-through mb-0 fs-three">10/000/000 تومان</p>
                     </div>
 
-                    <div style="border-radius: 5px; width: 275px;"
-                      class="border border-white py-2 px-0 d-flex flex-column justify-content-center align-items-center text-center">
-                      <p class="text-white fw-bolder mb-0 fs-4">قیمت ویژه کاربران تحلیل:</p>
-                      <p class="text-success fw-bolder mb-0 fs-4">2/980/000 تومان</p>
+                    <div style="border-radius: 5px; width: 100%;"
+                      class="border border-white py-3 px-0 d-flex flex-column justify-content-center align-items-center text-center">
+                      <p class="text-white fw-bolder mb-0 fs-two">قیمت ویژه کاربران تحلیل:</p>
+                      <p class="text-success fw-bolder mb-0 fs-two">2/980/000 تومان</p>
                     </div>
 
                     <p class="text-warning text-center mt-2 fs-6" style="text-wrap: nowrap;">(این تخفیف فقط برای کسایی
@@ -382,6 +388,11 @@
 
                     <li class="text-white text-start fs-6">
                       <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
+                      <span>در کمتر از 4 ماه فقط با روزی نیم ساعت تمرین</span>
+                    </li>
+
+                    <li class="text-white text-start fs-6">
+                      <div class="check-icon me-2" style="width: 20px; height: 20px; display: inline-block;"></div>
                       <span>به بهترین نسخه خودت تبدیل شو - همین الان!</span>
                     </li>
                   </ul>
@@ -395,7 +406,7 @@
           </div>
 
 
-          <a href="./pages/course.html" target="_blank" class="neon-button py-4 btn mt-5 mb-2 text-white fs-two w-100"
+          <a href="./pages/course.html" target="_blank" class="neon-button py-4 btn mt-3 mb-2 text-white fs-two w-100"
             style="max-width: 400px; direction: rtl;">می‌خوام جذاب شم!</a>
           <p class="fs-four" style="color: rgba(210, 210, 210, 0.85);">(دسترسی فوری، بدون نیاز به مشاوره)</p>
         </div>
@@ -462,7 +473,7 @@
       <div class="modal-content bg-dark text-white d-flex flex-column justify-content-center align-items-end">
         <div class="modal-body fs-four text-center" style="direction: rtl;">
           <!-- message updated dynamically -->
-          <p id="analyzeLockMessage">برای آنالیز دوباره باید ۱۰ دقیقه صبر کنید. (<span id="timer"></span>)</p>
+          <p id="analyzeLockMessage">برای آنالیز دوباره باید دقایقی صبر کنید. (<span id="timer"></span>)</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeLockBtn" data-bs-dismiss="modal">باشه</button>
@@ -478,6 +489,7 @@
   <script src="./assets/js/circle.js"></script>
   <script src="./assets/js/bubble.js"></script>
   <script src="./assets/js/camera.js"></script>
+  <script src="./assets/js/farsisaz.js"></script>
 
 </body>
 

@@ -168,7 +168,8 @@ main .card-body p.sub {
 #analyzeBtn,
 #firstNext,
 #secondNext,
-#reanalyzeBtn {
+#reanalyzeBtn,
+#showCourse {
   background: #ce31b0;
   background: linear-gradient(
     90deg,
@@ -204,13 +205,11 @@ main .card-body p.sub {
 }
 
 @media (max-width: 576px) {
-  main #cardContainer .card {
-    width: 325px !important;
-  }
-
   main #analyzeBtn,
   main #firstNext,
-  main #secondNext {
+  main #secondNext,
+  #reanalyzeBtn,
+  #showCourse {
     width: 325px !important;
   }
 
@@ -343,7 +342,7 @@ section > div > div div > img.after:nth-child(2) {
 }
 
 #course-banner-wrapper {
-  width: 25%;
+  width: 33%;
 }
 
 footer {
@@ -438,16 +437,16 @@ header {
 }
 
 .neon-button {
-  cursor: pointer;
-  color: white;
-  outline: none;
-  box-shadow: 0 0 15px rgba(214, 51, 132, 0.6);
-  transition: all 0.3s ease;
+  cursor: pointer !important;
+  color: white !important;
+  outline: none !important;
+  box-shadow: 0 0 15px rgba(214, 51, 132, 0.6) !important;
+  transition: all 0.3s ease !important;
 }
 
 .neon-button:hover {
-  box-shadow: 0 0 20px rgba(214, 51, 132, 0.8);
-  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(214, 51, 132, 0.8) !important;
+  transform: translateY(-2px) !important;
 }
 
 @media (min-width: 576px) {
@@ -479,4 +478,24 @@ main .card {
 .soft-show {
   opacity: 1;
   visibility: visible;
+}
+
+.red {
+  color: red !important;
+}
+
+.yellow {
+  color: yellow !important;
+}
+
+.lightgreen {
+  color: lightgreen !important;
+}
+
+.green {
+  color: green !important;
+}
+
+.darkgreen {
+  color: darkgreen !important;
 }
